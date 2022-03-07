@@ -28,7 +28,7 @@
 <body class="page-header-fixed page-quick-sidebar-over-content">
 
     <div class="page-container">
-        <form action="{{ route('app_farm.login') }}" method="post">
+        <form action="{{ route('app_farm.post.login') }}" method="post">
             @csrf
             <div class="page-content-wrapper page-register">
                 <div class="page-content">

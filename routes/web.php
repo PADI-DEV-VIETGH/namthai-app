@@ -17,9 +17,16 @@ use App\Http\Controllers\AppSaleController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('get-provinces', [AppFarmController::class, 'getProvince'])->name('get.provinces');
+Route::get('get-districts', [AppFarmController::class, 'getDistrict'])->name('get.districts');
+Route::get('get-wards', [AppFarmController::class, 'getWard'])->name('get.wards');
+
 Route::group(['prefix' => 'app-farm'], function() {
     Route::get('login', [AppFarmController::class, 'login'])->name('app_farm.login');
     Route::post('login', [AppFarmController::class, 'postLogin'])->name('app_farm.post.login');
+
+    Route::get('register', [AppFarmController::class, 'register'])->name('app_farm.register');
+    Route::post('register', [AppFarmController::class, 'postRegister'])->name('app_farm.post.register');
 });
 
 Route::group(['prefix' => 'app-sale'], function() {

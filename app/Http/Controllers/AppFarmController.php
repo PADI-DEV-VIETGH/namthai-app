@@ -16,9 +16,6 @@ class AppFarmController extends Controller
     public function postLogin(Request $request)
     {
         $dataForm = $request->all();
-        $header = [
-            'Content-Type' => 'application/json'
-        ];
 
         $option['base_url'] = $this->baseUrl;
         $params = [
@@ -32,13 +29,87 @@ class AppFarmController extends Controller
                 'os' => 'android',
                 'os_version' => 'android 8.0',
                 'app_version' => '1.0',
-                'onesignal_player_id' => 'aaaaaaaaaaa',
+                'onesignal_player_id' => 'aaaaaaaaa',
             ]
         ];
 
         $this->setOptions($option);
-        $result = $this->post('api/v1/farm/auth/login', $header, $params);
+        $result = $this->post('api/v1/farm/auth/login', $params);
 
         dd($result);
+    }
+
+    public function register()
+    {
+        return view('app_farm.register');
+    }
+
+    public function postRegister(Request $request)
+    {
+        $option['base_url'] = $this->baseUrl;
+        $params = [
+            'full_name' => 'employee_18',
+            'dob' => 'HTC One (M8)',
+            'gender' => 'android',
+            'phone_number' => 'android 8.0',
+            'password' => 'android 8.0',
+            'ward_id' => '1.0',
+            'address_detail' => 'aaaaaaaaa',
+        ];
+
+        $this->setOptions($option);
+        $result = $this->post('api/v1/farm/auth/register', $params);
+
+        dd($result);
+    }
+
+    public function getProvince(Request $request){
+
+        $page = $request->get('page') ?? 1;
+        $term = $request->get('term') ?? '';
+        $option['base_url'] = $this->baseUrl;
+        $params = [
+            'page' => $page,
+            'term' => $term,
+            'length' => 10
+        ];
+        $this->setOptions($option);
+        $result = $this->get('api/v1/common/area/provinces', $params);
+
+        return $result['data'];
+    }
+
+    public function getDistrict(Request $request){
+        $page = $request->get('page') ?? 1;
+        $term = $request->get('term') ?? '';
+        $province_id = $request->get('province_id') ?? '';
+        $option['base_url'] = $this->baseUrl;
+        $params = [
+            'page' => $page,
+            'term' => $term,
+            'province_id' => $province_id,
+            'length' => 10
+        ];
+        $this->setOptions($option);
+        $result = $this->get('api/v1/common/area/districts', $params);
+
+        return $result['data'];
+    }
+
+    public function getWard(Request $request){
+        $page = $request->get('page') ?? 1;
+        $term = $request->get('term') ?? '';
+        $district_id = $request->get('district_id') ?? '';
+        $option['base_url'] = $this->baseUrl;
+        $params = [
+            'page' => $page,
+            'term' => $term,
+            'district_id' => $district_id,
+            'length' => 10
+        ];
+        $this->setOptions($option);
+        $result = $this->get('api/v1/common/area/wards', $params);
+
+        return $result['data'];
     }
 }

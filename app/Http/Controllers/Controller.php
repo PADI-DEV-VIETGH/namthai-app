@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -40,9 +41,12 @@ class Controller extends BaseController
 
     }
 
-    public function post($endPoint = "", $header =[], $params = [])
+    public function post($endPoint = "", $params = [])
     {
         try{
+            $header = [
+                'Content-Type' => 'application/json'
+            ];
             $url = $this->baseUrl.'/'.$endPoint;
             $response = Http::withHeaders($header)
                 ->post($url, $params);
