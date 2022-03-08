@@ -38,7 +38,6 @@ class Controller extends BaseController
         }catch (\Exception $e){
             throw $e;
         }
-
     }
 
     public function post($endPoint = "", $params = [])
@@ -57,7 +56,7 @@ class Controller extends BaseController
                 }
                 return $data;
             }else{
-                throw new \Exception($response->getReasonPhrase());
+                return $response->json();
             }
         }catch (\Exception $e){
             throw $e;

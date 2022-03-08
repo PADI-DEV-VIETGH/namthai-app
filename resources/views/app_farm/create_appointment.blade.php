@@ -9,16 +9,16 @@
     <meta name="author" content="">
 
     <!-- Vendor CSS (GLOBAL MANDATORY STYLES)-->
-    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/owl.theme.default.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="/namthai/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/namthai/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/namthai/assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" type="text/css" href="/namthai/assets/css/owl.carousel.min.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="assets/css/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/custom.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/admin.css">
+    <link rel="stylesheet" type="text/css" href="/namthai/assets/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/namthai/assets/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/namthai/assets/css/admin.css">
 
 </head>
 
@@ -30,7 +30,7 @@
             <div class="page-content">
                 <div class="main-body-content member-page">
                     <div class="member-title-table">
-                        <div class="logo text-center"><img src="assets/images/logo.png" width="100px" /></div>
+                        <div class="logo text-center"><img src="/namthai/assets/images/logo.png" width="100px" /></div>
                         <div class="title-page full border-bottom mrb-30">
                             <h3 class="bold text-center">Tạo yêu cầu thăm khám</h3>
                         </div>
@@ -77,7 +77,7 @@
                                         placeholder="Cúm gà, Tiêu chảy,..."></textarea>
                                 </div>
                             </div>
-                            <div class="full">
+                            {{-- <div class="full">
                                 <div class="col-md-12 line-30">
                                     <label class="control-label">Ảnh vật nuôi</label>
                                 </div>
@@ -92,7 +92,7 @@
                                         <div class="upload__img-wrap"></div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="full mrb-10">
                                 <div class="col-md-12 line-30">
                                     <label class="control-label">Ghi chú</label>
@@ -127,15 +127,15 @@
     <!--.page-container-->
 
     <!-- Vendor jQuery (CORE PLUGINS - METRONIC)-->
-    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap.min.js"> </script>
-    <script type="text/javascript" src="assets/js/owl.carousel.min.js"></script>
-    <script type="text/javascript" src="assets/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="/namthai/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/namthai/assets/js/bootstrap.min.js"> </script>
+    <script type="text/javascript" src="/namthai/assets/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="/namthai/assets/js/owl.carousel.min.js"></script>
     <!-- Theme Script-->
     <script type="text/javascript" src="https://kit.fontawesome.com/8b9922aecc.js"></script>
-    <script type="text/javascript" src="assets/js/select2.min.js"></script>
-    <script type="text/javascript" src="assets/js/admin.js"></script>
-    <script type="text/javascript" src="assets/js/customer.js"></script>
+    <script type="text/javascript" src="/namthai/assets/js/select2.min.js"></script>
+    <script type="text/javascript" src="/namthai/assets/js/admin.js"></script>
+    <script type="text/javascript" src="/namthai/assets/js/customer.js"></script>
 </body>
 
 </html>
