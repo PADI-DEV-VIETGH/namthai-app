@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>bike code list</title>
+    <title>Danh sách yêu cầu thăm khám</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -37,18 +37,25 @@
                     <div class="main-body-content member-page">
                         <div class="member-title-table">
                             <div class="title-page full border-bottom mrb-30">
-                                <h3 class="bold text-center">Danh sách thăm khám</h3>
+                                <h3 class="bold text-center">Danh sách yêu cầu thăm khám</h3>
                             </div>
+                            @include('alert')
                             <div class="list-thamkham">
                                 <ul class="list-all-item">
+                                    @foreach($appointments as $value)
                                     <li class="item">
-                                        <div class="content-sale"><a href="chitietyeucau.html">
-                                                <div class="infor-sale name-sale"> <span class="title">Sale :
-                                                    </span><span class="cnt-sale">Sale_A</span></div>
-                                                <div class="infor-sale name-date"><span class="title">Ngày tạo
-                                                        :</span><span class="cnt-sale">03/03/2022</span></div>
-                                                <div class="infor-sale name-date"><span class="title">Ngày dự
-                                                        kiến :</span><span class="cnt-sale">03/03/2022</span>
+                                        <div class="content-sale">
+                                            <a href="{!! route('app_farm.show_appointment', $value['id']) !!}">
+                                                <div class="infor-sale name-sale"> 
+                                                    <span class="title">Sale :
+                                                    </span><span class="cnt-sale">{!! $employee['full_name'] ?? 'Chưa xác định' !!}</span>
+                                                </div>
+                                                <div class="infor-sale name-date">
+                                                    <span class="title">Ngày tạo:</span>
+                                                    <span class="cnt-sale">{!! $value['created_at'] !!}</span>
+                                                </div>
+                                                <div class="infor-sale name-date"><span class="title">Ngày dự kiến :</span>
+                                                    <span class="cnt-sale">{!! $value['expect_appointment'] !!}</span>
                                                 </div>
                                             </a>
                                             <div class="infor-sale list-btn">
@@ -57,34 +64,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="item">
-                                        <div class="content-sale">
-                                            <div class="infor-sale name-sale"> <span class="title">Sale :
-                                                </span><span class="cnt-sale">Sale_A</span></div>
-                                            <div class="infor-sale name-date"><span class="title">Ngày tạo
-                                                    :</span><span class="cnt-sale">03/03/2022</span></div>
-                                            <div class="infor-sale name-date"><span class="title">Ngày dự kiến
-                                                    :</span><span class="cnt-sale">03/03/2022</span></div>
-                                            <div class="infor-sale list-btn">
-                                                <button class="btn btn-sms">SMS</button>
-                                                <button class="btn btn-call">Call</button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="item">
-                                        <div class="content-sale">
-                                            <div class="infor-sale name-sale"> <span class="title">Sale :
-                                                </span><span class="cnt-sale">Sale_A</span></div>
-                                            <div class="infor-sale name-date"><span class="title">Ngày tạo
-                                                    :</span><span class="cnt-sale">03/03/2022</span></div>
-                                            <div class="infor-sale name-date"><span class="title">Ngày dự kiến
-                                                    :</span><span class="cnt-sale">03/03/2022</span></div>
-                                            <div class="infor-sale list-btn">
-                                                <button class="btn btn-sms">SMS</button>
-                                                <button class="btn btn-call">Call</button>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>

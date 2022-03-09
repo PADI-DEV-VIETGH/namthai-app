@@ -19,22 +19,74 @@ class AppFarmController extends Controller
 
     public function createAppointment(Request $request)
     {
-        if (!$request->session()->has('access_token')) {
+        if ($request->session()->has('farm')) {
+            $farm = $request->session()->get('farm');
+        } else {
             return redirect(route('app_farm.login'));
         }
-        return view('app_farm.create_appointment');
+
+        return view('app_farm.create_appointment', compact('farm'));
     }
 
     public function postCreateAppointment(Request $request)
     {
-        
-    }
-
-    public function listAppointment(Request $request){
-        if (!$request->session()->has('access_token')) {
+        $dataForm = $request->all();
+        if ($request->session()->has('farm')) {
+            $farm = $request->session()->get('farm');
+        } else {
             return redirect(route('app_farm.login'));
         }
-        return view('app_farm.list_appointment');
+
+        $option['base_url'] = $this->baseUrl;
+        $header = [
+            'Authorization' => 'Bearer '.$farm['access_token']
+        ];
+        $params = [
+            'animals' => $dataForm['animals']??[],
+            'symptom' => $dataForm['symptom']??'',
+            'images' => [],
+            'note' => $dataForm['note']??'',
+            'expect_appointment' => $dataForm['expect_appointment']??''
+        ];
+
+        $this->setOptions($option);
+        $result = $this->post('api/v1/appointment/create', $params, $header);
+
+        if(isset($result['status']) && $result['status'] == 200){
+            return redirect(route('app_farm.list_appointment'))->with(['message_success' => 'Tạo yêu cầu thăm khám thành công']);
+        }else{
+            return  Redirect::back()->withInput($request->input())->withErrors(['message_error' => $result['error']['message'] ?? $result['data']['message']]);
+        }
+    }
+
+    public function listAppointment(Request $request)
+    {
+        if ($request->session()->has('farm')) {
+            $farm = $request->session()->get('farm');
+        } else {
+            return redirect(route('app_farm.login'));
+        }
+
+        $option['base_url'] = $this->baseUrl;
+        $header = [
+            'Authorization' => 'Bearer '.$farm['access_token']
+        ];
+        $params = [
+            'page' => 1,
+            'length' => 100
+        ];
+
+        $this->setOptions($option);
+        $result = $this->get('api/v1/appointment/list', $params, $header);
+
+        if(isset($result['status']) && $result['status'] == 200){
+            $appointments = $result['data']['results'];
+            $employee = $result['data']['user'];
+
+            return view('app_farm.list_appointment', compact('appointments', 'employee'));
+        }else{
+            return  Redirect::route('app_farm.login')->withInput($request->input())->withErrors(['message_error' => $result['error']['message'] ?? $result['data']['message']]);
+        }
     }
 
     public function login()
@@ -66,10 +118,7 @@ class AppFarmController extends Controller
         $result = $this->post('api/v1/farm/auth/login', $params);
 
         if (isset($result['status']) && $result['status'] == 200) {
-            $request->session()->put('access_token', $result['data']['access_token']);
-            $request->session()->put('farm_id', $result['data']['id']);
-            $request->session()->put('farm_name', $result['data']['id']);
-            $request->session()->put('farm_phone', $result['data']['id']);
+            $request->session()->put('farm', $result['data']);
 
             return redirect(route('app_farm.home'));
         } else {
@@ -205,6 +254,31 @@ class AppFarmController extends Controller
         $this->setOptions($option);
         $result = $this->get('api/v1/common/area/wards', $params);
 
+        return $result['data'];
+    }
+
+    public function getAnimals(Request $request)
+    {
+        if ($request->session()->has('farm')) {
+            $farm = $request->session()->get('farm');
+        } else {
+            return redirect(route('app_farm.login'));
+        }
+        $page = $request->get('page') ?? 1;
+        $term = $request->get('term') ?? '';
+        $option['base_url'] = $this->baseUrl;
+        $header = [
+            'Authorization' => 'Bearer '.$farm['access_token']
+        ];
+        $params = [
+            'page' => $page,
+            'term' => $term,
+            'length' => 10
+        ];
+
+        $this->setOptions($option);
+        $result = $this->get('api/v1/common/animals', $params, $header);
+        
         return $result['data'];
     }
 }

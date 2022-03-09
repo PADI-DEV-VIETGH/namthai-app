@@ -20,6 +20,7 @@ Route::get('/', function () {
 Route::get('get-provinces', [AppFarmController::class, 'getProvince'])->name('get.provinces');
 Route::get('get-districts', [AppFarmController::class, 'getDistrict'])->name('get.districts');
 Route::get('get-wards', [AppFarmController::class, 'getWard'])->name('get.wards');
+Route::get('get-animals', [AppFarmController::class, 'getAnimals'])->name('get.animals');
 
 Route::group(['prefix' => 'app-farm'], function() {
     Route::get('home', [AppFarmController::class, 'home'])->name('app_farm.home');
@@ -37,7 +38,7 @@ Route::group(['prefix' => 'app-farm'], function() {
     Route::get('create-appointment', [AppFarmController::class, 'createAppointment'])->name('app_farm.create_appointment');
     Route::post('create-appointment', [AppFarmController::class, 'postCreateAppointment'])->name('app_farm.post.create_appointment');
     Route::get('list-appointment', [AppFarmController::class, 'listAppointment'])->name('app_farm.list_appointment');
-    Route::get('show-appointment', [AppFarmController::class, 'showAppointment'])->name('app_farm.show_appointment');
+    Route::get('show-appointment/{id}', [AppFarmController::class, 'showAppointment'])->name('app_farm.show_appointment');
 });
 
 Route::group(['prefix' => 'app-sale'], function() {

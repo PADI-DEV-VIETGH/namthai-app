@@ -24,11 +24,16 @@
     <!-- Theme CSS-->
     <link rel="stylesheet" type="text/css" href="/namthai/assets/css/custom.css">
     <link rel="stylesheet" type="text/css" href="/namthai/assets/css/admin.css">
+    <link href="/assets/css/wipro.css" rel="stylesheet">
     <style>
         .select2-container--default .select2-selection--single .select2-selection__rendered {
             color: #555;
             line-height: 38px;
             font-size: 14px;
+        }
+        .content-detail .full .select2-selection span {
+            line-height: 30px;
+            height: 30px;
         }
     </style>
 </head>
@@ -115,6 +120,21 @@
                         params['district_id'] = $('select[name="district_id"]').val();
                         return params;
                     }
+                }
+            });
+
+            $(`#animals`).select2({
+                placeholder: 'Chọn loại vật nuôi',
+                width: '100%',
+                allowClear: true,
+                language: {
+                    noResults: function(term) {
+                        return 'Không có kết quả';
+                    }
+                },
+                ajax:{
+                    url: "{!! route('get.animals') !!}",
+                    dataType: 'json'
                 }
             });
         });

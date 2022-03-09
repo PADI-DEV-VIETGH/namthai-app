@@ -21,11 +21,11 @@ class Controller extends BaseController
         }
     }
 
-    public function get($endPoint = "", $params = [])
+    public function get($endPoint = "", $params = [], $header = [])
     {
         try{
             $url = $this->baseUrl.'/'.$endPoint;
-            $response = Http::get($url, $params);
+            $response = Http::withHeaders($header)->get($url, $params);
             if($response->successful()){
                 $data = [];
                 if($response->successful()){
@@ -33,17 +33,17 @@ class Controller extends BaseController
                 }
                 return $data;
             }else{
-                throw new \Exception($response->getReasonPhrase());
+                return $response->json();
             }
         }catch (\Exception $e){
             throw $e;
         }
     }
 
-    public function post($endPoint = "", $params = [])
+    public function post($endPoint = "", $params = [], $header = [])
     {
         try{
-            $header = [
+            $header[] = [
                 'Content-Type' => 'application/json'
             ];
             $url = $this->baseUrl.'/'.$endPoint;
