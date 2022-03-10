@@ -71,18 +71,37 @@
                         <div class="title-sec">Hoạt động</div>
                         <div class="list-action">
                             <ul>
-                                <li><a href="#">
-                                        <div class="thumb"><img src="/namthai/assets/images/check.png" /></div>
-                                        <div class="text">Checkin</div>
-                                    </a></li>
-                                <li><a href="#">
+                                <li>
+                                    {{--@if(!$dataLogin)--}}
+                                        <a href="{{ route('app_sale.list_working_plan') }}">
+                                            <div class="thumb"><img src="/namthai/assets/images/check.png" /></div>
+                                            <div class="text">Checkin</div>
+                                        </a>
+                                    {{--@else--}}
+                                        {{--<a href="#">--}}
+                                            {{--<div class="thumb"><img src="/namthai/assets/images/check.png" /></div>--}}
+                                                {{--<div class="text">Checkout</div>--}}
+                                        {{--</a>--}}
+                                    {{--@endif--}}
+                                </li>
+                                <li>
+                                    <a href="#">
                                         <div class="thumb"><img src="/namthai/assets/images/history.png" /></div>
                                         <div class="text">Lịch sử chấm công</div>
-                                    </a></li>
-                                <li><a href="#">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('app_sale.product_inventory') }}">
                                         <div class="thumb"><img src="/namthai/assets/images/page.png" /></div>
                                         <div class="text">Kiểm kê hàng hóa</div>
-                                    </a></li>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('app_sale.appointment') }}">
+                                        <div class="thumb"><img src="/namthai/assets/images/don.png" /></div>
+                                        <div class="text">Thăm khám</div>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </section>
@@ -90,14 +109,18 @@
                         <div class="title-sec">Quản lý đơn</div>
                         <div class="list-action">
                             <ul>
-                                <li><a href="#">
+                                <li>
+                                    <a href="{{ route('app_sale.order') }}">
                                         <div class="thumb"><img src="/namthai/assets/images/don.png" /></div>
                                         <div class="text">Đơn đặt hàng</div>
-                                    </a></li>
-                                <li><a href="#">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('app_sale.prescription') }}">
                                         <div class="thumb"><img src="/namthai/assets/images/don.png" /></div>
                                         <div class="text">Đơn thuốc</div>
-                                    </a></li>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </section>
@@ -105,18 +128,24 @@
                         <div class="title-sec">Tra cứu thông tin</div>
                         <div class="list-action">
                             <ul>
-                                <li><a href="#">
+                                <li>
+                                    <a href="#">
                                         <div class="thumb"><img src="/namthai/assets/images/check.png" /></div>
                                         <div class="text">Danh sách đại lý</div>
-                                    </a></li>
-                                <li><a href="#">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
                                         <div class="thumb"><img src="/namthai/assets/images/history.png" /></div>
                                         <div class="text">Danh sách farm</div>
-                                    </a></li>
-                                <li><a href="#">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
                                         <div class="thumb"><img src="/namthai/assets/images/page.png" /></div>
                                         <div class="text">Kế hoạch chấm công</div>
-                                    </a></li>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </section>

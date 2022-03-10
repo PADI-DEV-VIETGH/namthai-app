@@ -51,9 +51,10 @@
                         <div class="title-sec">Địa điểm làm việc</div>
                         <div class="cnt-map-check">
                             <div class="cnt-left">
-                                <h4 class="title-cnt">Siêu thị BigC Thăng Long HN</h4>
-                                <div class="add">SubKA: 23423234023</div>
-                                <div class="map">Số 1, Đại Lộ Thăng Long, HN</div>
+                                <h4 class="title-cnt"></h4>
+                                <div class="date"></div>
+                                <div class="code"></div>
+                                <div class="address"></div>
                             </div>
                             <div class="cnt-img-map"><img src="/namthai/assets/images/map.png" alt="" /></div>
                         </div>
@@ -70,13 +71,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="title-sec">Ảnh quầy kệ (tối đa 12 ảnh)</div>
+                        <div class="title-sec">Ảnh nơi thăm khám (tối đa 12 ảnh)</div>
                         <div class="list-action">
                             <div class="upload__box">
                                 <div class="upload__img-wrap"></div>
                                 <div class="upload__btn-box">
                                     <label class="upload__btn"><span> <i class="fas fa-plus"></i></span>
-                                        <input class="upload__inputfile" type="file" multiple="" data-max_length="20" />
+                                        <input class="upload__inputfile" type="file" multiple="" data-max_length="12" />
                                     </label>
                                 </div>
                             </div>
@@ -109,6 +110,14 @@
     <script type="text/javascript" src="/namthai/assets/js/select2.min.js"></script>
     <script type="text/javascript" src="/namthai/assets/js/admin.js"></script>
     <script type="text/javascript" src="/namthai/assets/js/customer.js"></script>
+    <script>
+        let dataCheckIn = localStorage.getItem('dataCheckIn');
+        let objCheckIn = JSON.parse(dataCheckIn);
+        $('.title-cnt').html(objCheckIn.title);
+        $('.date').html(objCheckIn.date);
+        $('.code').html(objCheckIn.code);
+        $('.address').html(objCheckIn.address);
+    </script>
 </body>
 
 </html>
