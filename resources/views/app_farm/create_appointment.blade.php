@@ -14,7 +14,7 @@
         }
     </style>
     <div class="page-container">
-        <form action="{!! route('app_farm.post.create_appointment') !!}" method="post">
+        <form action="{!! route('app_farm.post.create_appointment') !!}" method="post" id="formAppointment">
             @csrf
             <div class="page-content-wrapper page-register">
                 <div class="page-content">
@@ -55,21 +55,23 @@
                                             placeholder="Cúm gà, Tiêu chảy,..." name="symptom"></textarea>
                                     </div>
                                 </div>
-                                {{-- <div class="full">
-                                    <div class="col-md-12 line-30">
+                                <div class="full">
+                                    <div class="col-md-12 col-xs-12">
                                         <label class="control-label">Ảnh vật nuôi</label>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="upload__box">
+                                    <div class="col-md-12 col-xs-12">
+                                        <div class="upload__boxs">
+                                            <div class="upload__img-wraps"></div>
                                             <div class="upload__btn-box">
                                                 <label class="upload__btn"><span> <i class="fas fa-plus"></i></span>
-                                                    <input class="upload__inputfile" type="file" multiple="" accept="image/*"/>
+                                                    <input id="file" name="image" class="upload__inputfiles" type="file" accept="image/*"
+                                                        data-max_length="11" />
                                                 </label>
                                             </div>
-                                            <div class="upload__img-wrap"></div>
                                         </div>
                                     </div>
-                                </div> --}}
+                                </div>
+                                <input type="hidden" name="arrImages" id="arrImage">
                                 <div class="full mrb-10">
                                     <div class="col-md-12 line-30">
                                         <label class="control-label">Ghi chú</label>
@@ -101,4 +103,47 @@
         </form>
         <!-- .member-->
     </div>
+@endsection
+
+@section('script')
+    <script>
+        function html(src) {
+            return `<div class="upload-images_input">
+                        <img style="max-width: 100%" src="${src}" class="img-bg" />
+                        <div class="upload__img-closee">
+                    </div>
+                    <div>
+                        <label>Comment</label>
+                        <input type="text" class="form-control" name="comment[]"  value=' ' placeholder='comment' />
+                    </div>
+                    `
+        }
+        $('#file').on('change', function () {
+            let url = '{!! route('app_farm.upload_file') !!}';
+            let form_data = new FormData($('#formAppointment')[0]);
+            form_data.append('_token', '{{ csrf_token() }}');
+            $.ajax({
+                url: url,
+                method: 'POST',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status === 200) {
+                        $('.upload__img-wraps').append(html(data.data.image_url));
+                        let arrayImage = [];
+                        $('.img-bg').each(function () {
+                            arrayImage.push($(this).attr('src'));
+                        })
+                        $('#arrImage').val(arrayImage);
+                    }
+                },
+                error: function (error) {
+                    return error;
+                }
+            })
+        })
+    </script>
 @endsection

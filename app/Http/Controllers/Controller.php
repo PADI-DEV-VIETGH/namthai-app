@@ -57,7 +57,7 @@ class Controller extends BaseController
                 }
                 return $data;
             }else{
-                throw new \Exception($response->getReasonPhrase());
+                return $response->json();
             }
         } catch (\Exception $e) {
             throw $e;

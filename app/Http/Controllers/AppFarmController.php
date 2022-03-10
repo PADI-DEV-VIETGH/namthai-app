@@ -4,10 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Utils;
 
 class AppFarmController extends Controller
 {
-    private $baseUrl = 'http://namthai.local';
+    private $baseUrl;
+
+    public function __construct()
+    {
+        $this->baseUrl = env('BASE_URL');
+    }
 
     public function home(Request $request)
     {
@@ -33,11 +40,25 @@ class AppFarmController extends Controller
 
     public function postCreateAppointment(Request $request)
     {
-        $dataForm = $request->all();
         if ($request->session()->has('farm')) {
             $farm = $request->session()->get('farm');
         } else {
             return redirect(route('app_farm.login'));
+        }
+
+        $dataForm = $request->all();
+
+        $arrayImage = [];
+        if ($images = $request->get('arrImages')) {
+            $arrayImage = explode(',', $images);
+        }
+
+        $images = [];
+        foreach ($arrayImage as $key => $value) {
+            $images[] = [
+                'url' => $value,
+                'comment' => $dataForm['comment'][$key]
+            ];
         }
 
         $option['base_url'] = $this->baseUrl;
@@ -47,7 +68,7 @@ class AppFarmController extends Controller
         $params = [
             'animals' => $dataForm['animals'] ?? [],
             'symptom' => $dataForm['symptom'] ?? '',
-            'images' => [],
+            'images' => $images,
             'note' => $dataForm['note'] ?? '',
             'expect_appointment' => $dataForm['expect_appointment'] ?? ''
         ];
@@ -115,7 +136,7 @@ class AppFarmController extends Controller
             $appointment = $result['data'];
             $employee = $result['data']['sale'];
 
-            return view('app_farm.show_appointment', compact('farm','appointment', 'employee'));
+            return view('app_farm.show_appointment', compact('farm', 'appointment', 'employee'));
         } else {
             return  Redirect::route('app_farm.login')->withInput($request->input())->withErrors(['message_error' => $result['error']['message'] ?? $result['data']['message']]);
         }
@@ -312,5 +333,36 @@ class AppFarmController extends Controller
         $result = $this->get('api/v1/common/animals', $params, $header);
 
         return $result['data'];
+    }
+
+    public function uploadFile(Request $request)
+    {
+        $option['base_url'] = $this->baseUrl;
+        $dataLogin = session()->get('farm');
+        $params = [
+            'name' => 'image',
+            'contents' => Utils::tryFopen($request->file('image')->getRealPath(), 'r'),
+            'filename' => $request->file('image')->getClientOriginalName(),
+            'headers' => [
+                'Content-Type' => 'multipart/form-data',
+                'Authorization' => 'Bearer ' . $dataLogin['access_token']
+            ]
+        ];
+        $this->setOptions($option);
+        $client = new Client([
+            'headers' => [
+                'Authorization' => 'Bearer ' . $dataLogin['access_token']
+            ]
+        ]);
+
+        $data =  $client->request('post', $this->baseUrl . '/api/v1/common/image/upload', [
+            'multipart' => [$params]
+        ]);
+
+        if ($data->getStatusCode() === 200) {
+            $data = $data->getBody()->getContents();
+        }
+
+        return $data;
     }
 }
