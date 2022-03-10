@@ -42,25 +42,19 @@
                                 <div class="col-md-3 col-xs-3">
                                     <label class="control-label">Tên FARM :</label>
                                 </div>
-                                <div class="col-md-9 col-xs-9"><span>Nguyễn Văn A</span></div>
-                            </div>
-                            <div class="full">
-                                <div class="col-md-3 col-xs-3">
-                                    <label class="control-label">Địa chỉ :</label>
-                                </div>
-                                <div class="col-md-9 col-xs-9"><span>539 Vũ Tông Phan - Thanh Xuân</span></div>
+                                <div class="col-md-9 col-xs-9"><span>{{ $farm['full_name']??'' }}</span></div>
                             </div>
                             <div class="full">
                                 <div class="col-md-3 col-xs-3">
                                     <label class="control-label">Số điện thoại :</label>
                                 </div>
-                                <div class="col-md-9 col-xs-9"><span>012345789</span></div>
+                                <div class="col-md-9 col-xs-9"><span>{{ $farm['phone_number']??'' }}</span></div>
                             </div>
                             <div class="full">
                                 <div class="col-md-3 col-xs-3">
                                     <label class="control-label">Thông tin Sale :</label>
                                 </div>
-                                <div class="col-md-9 col-xs-9"><span>Sale_A</span></div>
+                                <div class="col-md-9 col-xs-9"><span>{{ $employee['full_name']??'' }}</span></div>
                             </div>
                             <div class="full">
                                 <div class="col-md-12 col-xs-12 list-btn-sms">
@@ -68,46 +62,46 @@
                                     <button class="mrl-10 btn btn-call">Call</button>
                                 </div>
                             </div>
-                            <div class="full">
+                            {{-- <div class="full">
                                 <div class="col-md-3 col-xs-3">
                                     <label class="control-label">Ngày tạo :</label>
                                 </div>
-                                <div class="col-md-9 col-xs-9"><span>01/03/2022</span></div>
+                                <div class="col-md-9 col-xs-9"><span>{{ $appointment['created_at']??'' }}</span></div>
                             </div>
                             <div class="full">
                                 <div class="col-md-4 col-xs-4">
                                     <label class="control-label">Ngày dự kiến tới :</label>
                                 </div>
-                                <div class="col-md-8 col-xs-8"><span>12/9/2022</span></div>
-                            </div>
+                                <div class="col-md-8 col-xs-8"><span>{{ $appointment['expect_appointment']??'' }}</span></div>
+                            </div> --}}
                             <div class="full mrb-10">
                                 <div class="col-md-12 line-30">
                                     <label class="control-label">Loại vật nuôi thăm khám</label>
                                 </div>
                                 <div class="col-md-12 col-xs-12">
-                                    <div class="content-box">Gà, Cá, Lợn, Chim</div>
+                                    <div class="content-box">{{ $appointment['animals_text'] }}</div>
                                 </div>
                             </div>
                             <div class="full mrb-10">
                                 <div class="col-md-12 line-30">
                                     <label class="control-label">Triệu chứng</label>
-                                    <div class="content-box">Gà bị khô chân</div>
+                                    <div class="content-box">{{ $appointment['symptom'] }}</div>
                                 </div>
                             </div>
                             <div class="full">
                                 <div class="col-md-12 line-30">
                                     <label class="control-label">Ảnh vật nuôi</label>
                                     <div class="list-images"><span> <img
-                                                src="/namthai/assets/images/thumb1.png" /></span><span> <img
-                                                src="/namthai/assets/images/thumb2.png" /></span><span> <img
-                                                src="/namthai/assets/images/thumb1.png" /></span><span> <img
-                                                src="/namthai/assets/images/thumb2.png" /></span></div>
+                                        src="/namthai/assets/images/thumb1.png" /></span><span> <img
+                                        src="/namthai/assets/images/thumb2.png" /></span><span> <img
+                                        src="/namthai/assets/images/thumb1.png" /></span><span> <img
+                                        src="/namthai/assets/images/thumb2.png" /></span></div>
                                 </div>
                             </div>
                             <div class="full mrb-10">
                                 <div class="col-md-12 line-30">
                                     <label class="control-label">Ghi chú</label>
-                                    <div class="content-box"><span>10/02/2022: Đến kiểm tra trước</span></div>
+                                    <div class="content-box"><span>{{ $appointment['note'] }}</span></div>
                                 </div>
                             </div>
                         </div>

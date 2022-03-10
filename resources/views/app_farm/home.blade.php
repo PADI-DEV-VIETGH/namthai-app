@@ -67,7 +67,7 @@
                     <section class="list-content-home">
                         <ul class="list-item-btn">
                             <li class="item"><a href="{{ route('app_farm.create_appointment') }}">Tạo yêu cầu thăm khám</a></li>
-                            <li class="item"><a href="{{ route('app_farm.list_appointment') }}">Xem danh sách thăm khám</a></li>
+                            <li class="item"><a href="{{ route('app_farm.list_appointment') }}">Xem danh sách yêu cầu thăm khám</a></li>
                         </ul>
                     </section>
                     <!-- .block-1-->
