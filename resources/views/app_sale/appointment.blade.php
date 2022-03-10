@@ -28,7 +28,8 @@
 <body class="page-header-fixed page-quick-sidebar-over-content">
 
     <div class="page-container">
-
+        <form method="post" action="{{ route('app_sale.store_appointment') }}" id="formPrescription">
+            @csrf
         <div class="page-content-wrapper page-register">
             <div class="page-content">
                 <div class="main-body-content member-page">
@@ -61,10 +62,10 @@
                                     <label class="control-label">Trạng thái thăm khám</label>
                                 </div>
                                 <div class="col-md-12 col-xs-12">
-                                    <select class="form-control js-example-basic-single text-left"
+                                    <select name="status" class="form-control js-example-basic-single text-left"
                                         aria-label="Default select example">
-                                        <option selected="selected">Đã xác nhận</option>
-                                        <option value="1">Chưa xác nhận</option>
+                                        <option value="1" selected="selected">Đã xác nhận</option>
+                                        <option value="2">Chưa xác nhận</option>
                                     </select>
                                 </div>
                             </div>
@@ -77,16 +78,17 @@
                                         <div class="upload__img-wraps"></div>
                                         <div class="upload__btn-box">
                                             <label class="upload__btn"><span> <i class="fas fa-plus"></i></span>
-                                                <input class="upload__inputfiles" type="file" multiple=""
-                                                    data-max_length="20" />
+                                                <input id="file" name="image" class="upload__inputfiles" type="file" accept="image/*"
+                                                    data-max_length="11" />
                                             </label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <input type="hidden" name="arrImages" id="arrImage">
                             <div class="full text-center">
-                                <button class="btn green pad-8-50">Hoàn tất</button>
-                                <button class="btn green pad-8-50">Tạo đơn thuốc</button>
+                                <button type="submit" class="btn green pad-8-50">Hoàn tất</button>
+                                <button type="button" id="createPrescription" class="btn green pad-8-50">Tạo đơn thuốc</button>
                             </div>
                         </div>
                         <!--.table-member-mng-->
@@ -97,10 +99,23 @@
             </div>
             <!-- .page-content-->
         </div>
+        </form>
         <!-- .member-->
     </div>
     <!--.page-container-->
-
+<style>
+    .upload-images_input {
+        height: 200px;
+        position: relative;
+        margin-bottom: 70px;
+    }
+    .upload-images_input img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        padding-bottom: 20px !important;
+    }
+</style>
     <!-- Vendor jQuery (CORE PLUGINS - METRONIC)-->
     <script type="text/javascript" src="/namthai/assets/js/jquery.min.js"></script>
     <script type="text/javascript" src="/namthai/assets/js/bootstrap.min.js"> </script>
@@ -111,6 +126,66 @@
     <script type="text/javascript" src="/namthai/assets/js/select2.min.js"></script>
     <script type="text/javascript" src="/namthai/assets/js/admin.js"></script>
     <script type="text/javascript" src="/namthai/assets/js/customer.js"></script>
+    <script>
+        $('#createPrescription').click(function () {
+            let url = '{!! route('app_sale.prescription') !!}';
+            let form_data = new FormData($('#formPrescription')[0]);
+            form_data.append('_token', '{{ csrf_token() }}');
+            $.ajax({
+                url: url,
+                method: 'POST',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                dataType: 'json',
+                success: function (data) {
+                    window.location.href = "{{ route('app_sale.create_prescription') }}";
+                },
+                error: function (error) {
+                    return error;
+                }
+            })
+        })
+        function html(src) {
+            return `<div class="upload-images_input">
+                        <img src="${src}" class="img-bg" />
+                        <div class="upload__img-close">
+                    </div>
+                    <div>
+                        <label>Comment</label>
+                        <input type="text" class="form-control" name="comment[]"  value=' ' placeholder='comment' />
+                    </div>
+                    `
+        }
+        $('#file').on('change', function () {
+            let url = '{!! route('app_sale.upload_file') !!}';
+            let form_data = new FormData($('#formPrescription')[0]);
+            form_data.append('_token', '{{ csrf_token() }}');
+            $.ajax({
+                url: url,
+                method: 'POST',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status === 200) {
+                        $('.upload__img-wraps').append(html(data.data.image_url));
+                        let arrayImage = [];
+                        $('.img-bg').each(function () {
+                            arrayImage.push($(this).attr('src'));
+                        })
+                        $('#arrImage').val(arrayImage);
+                    }
+                },
+                error: function (error) {
+                    return error;
+                }
+            })
+        })
+    </script>
 </body>
 
 </html>

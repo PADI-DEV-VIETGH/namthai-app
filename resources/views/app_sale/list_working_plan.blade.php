@@ -37,42 +37,25 @@
                     <section class="content-map">
                         <div class="time-line">
                             <div class="date">
-                                <span>28/02/2022</span> -
-                                <span>04/03/2022</span>
+                                <span>{{ \Carbon\Carbon::now()->startOfWeek()->format('d/m/Y') }}</span> -
+                                <span>{{ \Carbon\Carbon::now()->endOfWeek()->format('d/m/Y') }}</span>
                             </div>
                         </div>
-                        <div class="cnt-map-check mrb-20">
-                            <div class="cnt-left">
-                                <h4 class="title-cnt">Siêu thị BigC Thăng Long HN</h4>
-                                <div class="add">SubKA: 23423234023</div>
-                                <div class="map">Số 1, Đại Lộ Thăng Long, HN</div>
-                            </div>
-                            <div class="cnt-img-map"><img src="/namthai/assets/images/map.png" alt="" /></div>
-                        </div>
-                        <div class="cnt-map-check mrb-20">
-                            <div class="cnt-left">
-                                <h4 class="title-cnt">Siêu thị BigC Thăng Long HN</h4>
-                                <div class="add">SubKA: 23423234023</div>
-                                <div class="map">Số 1, Đại Lộ Thăng Long, HN</div>
-                            </div>
-                            <div class="cnt-img-map"><img src="/namthai/assets/images/map.png" alt="" /></div>
-                        </div>
-                        <div class="cnt-map-check mrb-20">
-                            <div class="cnt-left">
-                                <h4 class="title-cnt">Siêu thị BigC Thăng Long HN</h4>
-                                <div class="add">SubKA: 23423234023</div>
-                                <div class="map">Số 1, Đại Lộ Thăng Long, HN</div>
-                            </div>
-                            <div class="cnt-img-map"><img src="/namthai/assets/images/map.png" alt="" /></div>
-                        </div>
-                        <div class="cnt-map-check mrb-20">
-                            <div class="cnt-left">
-                                <h4 class="title-cnt">Siêu thị BigC Thăng Long HN</h4>
-                                <div class="add">SubKA: 23423234023</div>
-                                <div class="map">Số 1, Đại Lộ Thăng Long, HN</div>
-                            </div>
-                            <div class="cnt-img-map"><img src="/namthai/assets/images/map.png" alt="" /></div>
-                        </div>
+                        @if (!empty($listWorkingPlan))
+                            @foreach($listWorkingPlan as $workingPlan)
+                                <a href="#" onclick="redirectCheckIn(this)">
+                                    <div class="cnt-map-check mrb-20">
+                                        <div class="cnt-left" style="color: #212121;">
+                                            <h4 class="title-cnt">{{ $workingPlan['addressable']['data']['name'] }}</h4>
+                                            <div class="date">{{ $workingPlan['day_of_week']. ' ngày ' . Carbon\Carbon::createFromFormat('Y-m-d', $workingPlan['date'])->format('d/m/Y') }}</div>
+                                            <div class="code">{{ $workingPlan['addressable']['type'] == 'farm'? "Mã farm: " : "Mã đại lý: " }}{{ $workingPlan['addressable']['data']['code'] }}</div>
+                                            <div class="address">{{ $workingPlan['addressable']['data']['addr_detail'] }}</div>
+                                        </div>
+                                        <div class="cnt-img-map"><img src="{{ $workingPlan['addressable']['data']['image'] ? $workingPlan['addressable']['data']['image'] : '/namthai/assets/images/map.png' }}" alt="" /></div>
+                                    </div>
+                                </a>
+                            @endforeach
+                        @endif
                     </section>
                     <!-- .block-1-->
                 </div>
@@ -93,6 +76,20 @@
     <script type="text/javascript" src="https://kit.fontawesome.com/8b9922aecc.js"></script>
     <script type="text/javascript" src="/namthai/assets/js/admin.js"></script>
     <script type="text/javascript" src="/namthai/assets/js/customer.js"></script>
+<script>
+    function redirectCheckIn(e) {
+        let array = {
+            'title' : $(e).find('.title-cnt').text(),
+            'date' : $(e).find('.date').text(),
+            'code' : $(e).find('.code').text(),
+            'address' : $(e).find('.address').text(),
+        };
+        localStorage.setItem('dataCheckIn', JSON.stringify(array));
+        if (localStorage.getItem('dataCheckIn')) {
+            window.location.href = '{{ route('app_sale.check_in') }}'
+        }
+    }
+</script>
 </body>
 
 </html>
