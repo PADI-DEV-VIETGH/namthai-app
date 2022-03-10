@@ -1,0 +1,484 @@
+.list_table .dataTables_filter  label input[type="search"]{
+    height: 38px;
+    position: absolute;
+    top: -10px;
+    right: 0;
+    width: 48%;
+    color: #139748;
+}
+
+@media (max-width: 1281px) {
+    .list_table .dataTables_filter  label input[type="search"]{
+        width: 108%;
+    }
+}
+@media (min-width: 1025px) and (max-width: 1600px) {
+    .list_table .dataTables_filter  label input[type="search"]{
+        width: 67%;
+    }
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+    margin-right: 8px;
+}
+
+.row_action_datatable{
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
+}
+
+.row_action_datatable a:first-child{
+    margin-right: 5px;
+}
+
+.checkbox_datatable{
+    width: 18px;
+    height: 18px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+    color: #4b0082;
+}
+.padi_menu .card-body .main-sidebar .nav-sub-item.active .nav-sub-link.active{
+    /*text-decoration: underline;*/
+}
+.padi_menu .card-body .main-sidebar .nav-sub-item .nav-sub-link{
+    color: #444 !important;
+}
+.padi_menu .card-body .main-sidebar .nav-sub-item.active .nav-sub-link{
+    color: #444 !important;
+}
+.padi_menu .card-body .main-sidebar-body .nav-sub .nav-sub-item.active .nav-sub-link:before{
+    color: #444 !important;
+}
+.padi_menu .card-body .main-sidebar .nav-sub-item.active .nav-sub-link.with-sub{
+    color: #139748 !important;
+}
+.padi_menu .card-body .main-sidebar .nav-sub-item.active .nav-sub-link.with-sub:before{
+    color: #139748 !important;
+}
+.padi_menu .card-body .main-sidebar .nav-sub-item.active .nav-sub-link.active{
+    color: #139748 !important;
+}
+.padi_menu .card-body .main-sidebar .nav-sub-item.active .nav-sub-link.active:before{
+    color: #139748 !important;
+}
+.padi_menu .card-body .main-sidebar .nav-sub-item .nav-sub-link:hover{
+    color: #139748 !important;
+}
+.padi_menu .card-body .main-sidebar .nav-sub-item .nav-sub-link:hover :before{
+    color: #139748 !important;
+}
+.wipro_map{
+    height: 475px;
+    position: relative;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.wipro_map .item{
+    display: inline-block;
+    width: 100%;
+    padding-left: 10px;
+    margin-bottom: 0px;
+    position: relative;
+    z-index: 2;
+}
+.wipro_map .item.item_sub{
+    /*padding-left: 30px;*/
+    margin-bottom: 6px;
+    position: relative;
+    z-index: 2;
+}
+.wipro_map .item:before{
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 2px solid #0c21e4;
+    display: inline-block;
+    border-radius: 100%;
+    top: 3px;
+    left: -7px;
+    content: "";
+}
+.wipro_map .item_color{
+    position: relative;
+}
+.wipro_map .item_color:after{
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background: #e0e0e0;
+    display: inline-block;
+    top: 0px;
+    left: -3px;
+    content: "";
+    z-index: 0;
+}
+.wipro_map .item:nth-child(2):before{
+    border: 2px solid #948b8f !important;
+    width: 8px;
+    height: 8px;
+    left: -6px;
+}
+.wipro_map .item_color:nth-child(2) .item:before{
+    border: 2px solid #0ce4d6;
+}
+.wipro_map .item_color:nth-child(3) .item:before{
+    border: 2px solid #e40cd7;
+}
+.wipro_map .item_color:nth-child(4) .item:before{
+    border: 2px solid #59ca9e;
+}
+.wipro_map .item_color:nth-child(5) .item:before{
+    border: 2px solid #0c21e4;
+}
+.wipro_map .item_color:nth-child(6) .item:before{
+    border: 2px solid #e40cd7;
+}
+.wipro_map .item_color:nth-child(7) .item:before{
+    border: 2px solid #e40c4c;
+}
+.wipro_map .item_color:nth-child(8) .item:before{
+    border: 2px solid #0ce4d6;
+}
+.wipro_map .item_color:nth-child(9) .item:before{
+    border: 2px solid #e46c0c;
+}
+.wipro_map .item h5{
+    font-size: 14px;
+}
+.wipro_map .item h5 .name{
+    font-size: 14px;
+    float: left;
+    color: #444;
+}
+.wipro_map .item h6{
+    font-size: 13px;
+    float: left;
+    color: #777;
+    font-weight: normal;
+    width: 100%;
+    margin-bottom: 0 !important;
+}
+.wipro_map .item h6 span{
+    display: inline-block;
+    width: 60px;
+    color: #139748;
+    /*float: right;*/
+}
+.wipro_map .item h5 .time{
+    float: right;
+    font-size: 13px;
+    color: #139748;
+}
+#ui-datepicker-div{
+    z-index: 999999 !important;
+}
+.padi_ve_layout.two_item .item .content.galery .modal-body img{
+    width: 100%;
+}
+.wd-5p{
+    width: 5% !important;
+}
+.wd-10p{
+    width: 10% !important;
+}
+.wd-15p{
+    width: 15% !important;
+}
+.wd-20p{
+    width: 20% !important;
+}
+.wd-25p{
+    width: 25% !important;
+}
+.wd-30p{
+    width: 30% !important;
+}
+.wd-35p{
+    width: 35% !important;
+}
+.wd-40p{
+    width: 45% !important;
+}
+.wd-50p{
+    width: 50% !important;
+}
+.wd-55p{
+    width: 55% !important;
+}
+.wd-60p{
+    width: 60% !important;
+}
+.wd-65p{
+    width: 65% !important;
+}
+.wd-70p{
+    width: 70% !important;
+}
+.wd-75p{
+    width: 75% !important;
+}
+.wd-80p{
+    width: 85% !important;
+}
+.wd-85p{
+    width: 85% !important;
+}
+.wd-90p{
+    width: 90% !important;
+}
+.wd-95p{
+    width: 95% !important;
+}
+.wd-100p{
+    width: 100% !important;
+}
+table.dataTable /* give class of table*/
+{
+   table-layout: fixed;
+}
+
+table.dataTable th,
+table.dataTable td
+{
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: normal;
+  width:auto;
+  overflow: hidden;
+}
+.dataTables_wrapper .dataTables_scrollHeadInner{
+    width: 100% !important;
+}
+.dataTables_wrapper .dataTables_scrollHeadInner .dataTable{
+    width: 100% !important;
+}
+.dataTables_wrapper .dataTables_scrollBody .dataTable{
+    width: 100% !important;
+}
+.padi_menu .side-menu .nav-sub-item.show > .nav-sub{
+    max-height: 50vh;
+    overflow-y: scroll;
+}
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  transition: .3s background;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #139748;
+  border-radius: 4px;
+}
+
+.module_page_login.signpages{
+    margin-bottom: 125px;
+}
+.sa-button-container .cancel{
+    min-width: 95px;
+}
+.sa-button-container .confirm{
+    min-width: 95px;
+}
+.checkall_hor{
+    float: right;
+    margin-top: 3px;
+}
+.checkall_ver{
+    float: right;
+    /*margin-right: 5px;*/
+    margin-top: 3px;
+}
+#productReportHistoryModal .md_search.plan{
+    display: flex ;
+    flex-direction: row ;
+    flex-wrap: wrap ;
+    justify-content: space-between ;
+    align-items: center ;
+    align-content: center ;
+}
+#productReportHistoryModal .md_search.plan .form-group{
+    width: 45%;
+}
+#productReportHistoryModal .md_search.plan .icon_from{
+    width: 10%;
+    text-align: center;
+}
+.clear-selection {
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 8px;
+}
+.display-none {
+    display: none !important;
+}
+.display-block {
+    display: block !important;
+}
+.padi_ve_layout .item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    margin-bottom: 15px;
+}
+
+.custom-container-autocomlete-table{
+    padding-left: 0px;
+}
+
+
+.custom-container-autocomlete-table table tr{
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.custom-container-autocomlete-table table tbody{
+    max-height: 370px;
+    overflow: scroll;
+    display: block;
+}
+
+.custom-container-autocomlete-table li {
+    text-decoration: none;
+    list-style: none;
+}
+
+.custom-container-autocomlete-table .ui-menu-item:hover{
+    background-color: #DDDDDD;
+}
+
+.custom-container-autocomlete-table table tr{
+    cursor: pointer;
+}
+
+.custom-container-autocomlete-table table td{
+    max-width: 150px;
+    overflow: hidden;
+}
+
+.customm-dropdown{
+    position: relative;
+}
+
+.customm-dropdown-menu{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0.25rem;
+}
+
+.customm-dropdown-item{
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+
+.custom-dropdown-toggle{
+    border: 1px solid #DDDDDD;
+    padding: 5px;
+}
+.order{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.order .title{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.order .content-top{
+    display: flex ;
+    flex-direction: row ;
+    flex-wrap: wrap ;
+    justify-content: space-between ;
+    align-items: flex-start ;
+    align-content: center ;
+}
+.order .content-top .left{
+    width: 60%;
+}
+.order .content-top .right{
+    width: 40%;
+}
+.order .content-top ul{
+    list-style-type: none;
+}
+.order .content-top ul li{
+    display: flex ;
+    justify-content: flex-start ;
+    align-items: flex-start ;
+    align-content: center ;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+.order .content-top ul li .top-title{
+    width: 120px;
+}
+.order .content-top ul li .top-ct{
+    width: calc(100% - 120px); 
+}
+.order .content-top ul li .top-ct .select2-container{
+    width: 200px !important; 
+}
+.order table.dataTable thead th{
+    vertical-align: middle; 
+}
+.order table.dataTable thead th{
+    text-align: center;
+}
+.order table.dataTable tbody td{
+    text-align: center;
+}
+.order .note_order{
+    list-style-type: none;
+    margin-bottom: 30px;
+}
+.order .note_order li{
+    display: flex ;
+    flex-direction: row ;
+    flex-wrap: wrap ;
+    justify-content: flex-start ;
+    align-items: flex-start ;
+    align-content: center ;
+}
+.order .btn-list{
+    margin-bottom: 30px;
+    display: flex ;
+    flex-direction: row ;
+    flex-wrap: wrap ;
+    justify-content: flex-end ;
+    align-items: flex-start ;
+    align-content: center ;
+}
+.order .btn-list button{
+    width: 150px;
+}

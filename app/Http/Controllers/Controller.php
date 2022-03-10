@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
 
 class Controller extends BaseController
 {
@@ -21,7 +22,7 @@ class Controller extends BaseController
         }
     }
 
-    public function get($endPoint = "", $header = [], $params = [])
+    public function get($endPoint = "", $params = [], $header = [])
     {
         try {
             $url = $this->baseUrl . '/' . $endPoint;
@@ -32,18 +33,20 @@ class Controller extends BaseController
                     $data = $response->json();
                 }
                 return $data;
-            } else {
-                throw new \Exception($response->getReasonPhrase());
+            }else{
+                return $response->json();
             }
         } catch (\Exception $e) {
             throw $e;
         }
-
     }
 
-    public function post($endPoint = "", $header = [], $params = [])
+    public function post($endPoint = "", $params = [], $header = [])
     {
-        try {
+        try{
+            $header[] = [
+                'Content-Type' => 'application/json'
+            ];
             $url = $this->baseUrl . '/' . $endPoint;
             $response = Http::withHeaders($header)
                 ->post($url, $params);
@@ -53,7 +56,7 @@ class Controller extends BaseController
                     $data = $response->json();
                 }
                 return $data;
-            } else {
+            }else{
                 throw new \Exception($response->getReasonPhrase());
             }
         } catch (\Exception $e) {
