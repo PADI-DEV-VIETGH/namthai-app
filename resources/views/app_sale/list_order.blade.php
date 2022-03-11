@@ -38,6 +38,8 @@
                             <div class="title-page full border-bottom mrb-30">
                                 <h3 class="bold text-center">Danh sách đơn đặt hàng</h3>
                             </div>
+                            <button class="btn btn-success btn-small" style="margin-bottom: 10px;" id="create-order">Tạo
+                                đơn hàng</button>
                             <div class="list-thamkham">
                                 <ul class="list-all-item">
                                     <li class="item">
@@ -123,6 +125,13 @@
     <script type="text/javascript" src="https://kit.fontawesome.com/8b9922aecc.js"></script>
     <script type="text/javascript" src="/namthai/assets/js/admin.js"></script>
     <script type="text/javascript" src="/namthai/assets/js/customer.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#create-order').on('click', function() {
+                window.location.href = "/app-sale/create_order";
+            });
+        });
+    </script>
 </body>
 
 </html>

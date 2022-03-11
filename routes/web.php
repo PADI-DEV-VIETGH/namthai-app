@@ -21,6 +21,8 @@ Route::get('get-provinces', [AppFarmController::class, 'getProvince'])->name('ge
 Route::get('get-districts', [AppFarmController::class, 'getDistrict'])->name('get.districts');
 Route::get('get-wards', [AppFarmController::class, 'getWard'])->name('get.wards');
 Route::get('get-animals', [AppFarmController::class, 'getAnimals'])->name('get.animals');
+Route::get('get-distributors', [AppSaleController::class, 'getDistributor'])->name('get.distributors');
+Route::get('search-products', [AppSaleController::class, 'searchProduct'])->name('search.products');
 
 Route::group(['prefix' => 'app-farm'], function() {
     Route::get('home', [AppFarmController::class, 'home'])->name('app_farm.home');
@@ -45,6 +47,7 @@ Route::group(['prefix' => 'app-sale'], function() {
     Route::get('check_in', [AppSaleController::class, 'checkIn'])->name('app_sale.check_in');
     Route::get('list_working_plan', [AppSaleController::class, 'listWorkingPlan'])->name('app_sale.list_working_plan');
     Route::get('product_inventory', [AppSaleController::class, 'productInventory'])->name('app_sale.product_inventory');
+    Route::get('create_order', [AppSaleController::class, 'createOrder'])->name('app_sale.create_order');
     Route::get('order', [AppSaleController::class, 'order'])->name('app_sale.order');
     Route::get('prescription', [AppSaleController::class, 'prescription'])->name('app_sale.prescription');
     Route::get('appointment', [AppSaleController::class, 'appointment'])->name('app_sale.appointment');
