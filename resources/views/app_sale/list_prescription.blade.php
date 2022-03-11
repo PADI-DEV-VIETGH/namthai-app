@@ -36,50 +36,56 @@
                 <div class="main-body-content member-page">
                     <div class="member-title-table">
                         <div class="title-page full border-bottom mrb-30">
-                            <h3 class="bold text-center">Danh sách đơn đặt hàng</h3>
+                            <h3 class="bold text-center">Danh sách đơn thuốc</h3>
                         </div>
                         <div class="list-thamkham">
                             <ul class="list-all-item">
-                                @if(!empty($listOrders))
-                                    @foreach($listOrders as $order)
+                                @if(!empty($listPrescriptions))
+                                    @foreach($listPrescriptions as $prescription)
                                         <li class="item">
                                             <div class="content-sale">
                                                 <a href="#">
                                                     <div class="infor-sale name-sale">
                                                         <span class="title">
-                                                            Tên đại lý :
+                                                            Tên farm:
                                                         </span>
-                                                        <span class="cnt-sale">{{ $order['distributor_to']['name'] }}</span>
+                                                        <span class="cnt-sale">{{ $prescription['farm_name'] }}</span>
                                                     </div>
                                                     <div class="infor-sale">
                                                         <span class="title">
-                                                            Mã đại lý :
+                                                            Địa chỉ:
                                                         </span>
-                                                        <span class="cnt-sale">{{ $order['distributor_to']['code'] }}</span>
+                                                        <span class="cnt-sale">{{ $prescription['farm_address'] }}</span>
                                                     </div>
                                                     <div class="infor-sale">
                                                         <span class="title">
-                                                            Mã đơn hàng :
+                                                            Số điện thoại:
                                                         </span>
-                                                        <span class="cnt-sale">{{ $order['code'] }}</span>
+                                                        <span class="cnt-sale">{{ $prescription['farm_phone'] }}</span>
                                                     </div>
                                                     <div class="infor-sale">
                                                         <span class="title">
-                                                            Số điện thoại :
+                                                            Mã đơn thuốc:
                                                         </span>
-                                                        <span class="cnt-sale">{{ $order['distributor_to']['phone_number'] }}</span>
+                                                        <span class="cnt-sale">{{ $prescription['code'] }}</span>
                                                     </div>
                                                     <div class="infor-sale">
                                                         <span class="title">
-                                                            Người đặt hàng :
+                                                            Người tạo:
                                                         </span>
-                                                        <span class="cnt-sale">{{ $order['created_by']['full_name'] }}</span>
+                                                        <span class="cnt-sale">{{ $prescription['created_by']['full_name'] }}</span>
+                                                    </div>
+                                                    <div class="infor-sale">
+                                                        <span class="title">
+                                                            Ngày tạo:
+                                                        </span>
+                                                        <span class="cnt-sale">{{ $prescription['created_at'] }}</span>
                                                     </div>
                                                     <div class="infor-sale">
                                                         <span class="title">
                                                             Trạng thái:
                                                         </span>
-                                                        <span class="cnt-sale">{{ $order['status'] }}</span>
+                                                        <span class="cnt-sale">{{ $prescription['status'] }}</span>
                                                     </div>
                                                 </a>
                                             </div>

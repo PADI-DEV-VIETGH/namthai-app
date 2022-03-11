@@ -124,7 +124,7 @@ class AppSaleController extends Controller
         $result = $this->get('api/v1/order', $params, $header);
         $listOrders = [];
 
-        if (isset($result['status']) && $result['status']) {
+        if (isset($result['status']) && $result['status'] == 200) {
             $listOrders = $result['data']['results'];
         }
 
@@ -252,9 +252,33 @@ class AppSaleController extends Controller
         return $data;
     }
 
-    public function prescription ()
+    public function prescription (Request $request)
     {
-        return view('app_sale.product_inventory');
+        $dataLogin = session()->get('dataLogin');
+
+        if (!$dataLogin) {
+            return redirect(route('app_sale.login'));
+        }
+        $page = $request->get('page') ?? 1;
+        $length = $request->get('length') ?? 10;
+        $option['base_url'] = $this->baseUrl;
+        $header = [
+            'Content-Type' => 'application/json',
+            'Authorization' =>  'Bearer ' . $dataLogin['access_token']
+        ];
+        $this->setOptions($option);
+        $params = [
+            'page' => $page,
+            'length' => $length
+        ];
+
+        $result = $this->get('api/v1/prescription/index', $params, $header);
+        $listPrescriptions = [];
+        if (isset($result['status']) && $result['status'] == 200) {
+            $listPrescriptions = $result['data']['results'];
+        }
+
+        return view('app_sale.list_prescription', compact('listPrescriptions'));
     }
 
     public function storeCheckIn(Request $request)
