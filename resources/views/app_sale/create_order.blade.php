@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-md-9 col-xs-9">
                                     <select class="form-select form-control js-example-basic-single text-left"
-                                        aria-label="Default select example">
+                                        aria-label="Default select example" id="distributor">
                                         <option selected="selected">Đại lý</option>
                                         <option value="1">Đại lý A</option>
                                         <option value="2">Đại lý B</option>
@@ -89,50 +89,6 @@
                                                 <td>5%</td>
                                                 <td>10tr</td>
                                             </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Cám</td>
-                                                <td class="text-center">
-                                                    <input type="text" placeholder="1000">
-                                                </td>
-                                                <td>bao</td>
-                                                <td>5%</td>
-                                                <td>10tr</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Cám</td>
-                                                <td class="text-center">
-                                                    <input type="text" placeholder="1000">
-                                                </td>
-                                                <td>bao</td>
-                                                <td>5%</td>
-                                                <td>10tr</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Cám</td>
-                                                <td class="text-center">
-                                                    <input type="text" placeholder="1000">
-                                                </td>
-                                                <td>bao</td>
-                                                <td>5%</td>
-                                                <td>10tr</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Cám</td>
-                                                <td class="text-center">
-                                                    <input type="text" placeholder="1000">
-                                                </td>
-                                                <td>bao</td>
-                                                <td>5%</td>
-                                                <td>10tr</td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                     <div class="total bold"><strong>Tổng tiền:</strong><strong>40 000 000</strong>
@@ -165,6 +121,23 @@
     <script type="text/javascript" src="/namthai/assets/js/select2.min.js"></script>
     <script type="text/javascript" src="/namthai/assets/js/admin.js"></script>
     <script type="text/javascript" src="/namthai/assets/js/customer.js"></script>
+
+    <script>
+        $(`#distributor`).select2({
+            placeholder: 'Chọn đại lý',
+            width: '100%',
+            allowClear: true,
+            language: {
+                noResults: function(term) {
+                    return 'Không có kết quả';
+                }
+            },
+            ajax:{
+                url: "{!! route('get.distributors') !!}",
+                dataType: 'json'
+            }
+        });
+    </script>
 </body>
 
 </html>

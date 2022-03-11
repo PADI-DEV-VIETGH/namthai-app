@@ -15,7 +15,7 @@ class AppSaleController extends Controller
     {
         $this->baseUrl = env('BASE_URL');
     }
-    
+
     public function login()
     {
         return view('app_sale.login');
@@ -103,6 +103,15 @@ class AppSaleController extends Controller
         return view('app_sale.product_inventory');
     }
 
+    public function createOrder(Request $request)
+    {
+        return view('app_sale.create_order');
+    }
+
+    public function postCreateOrder(Request $request)
+    {
+
+    }
     public function order(Request $request)
     {
         $dataLogin = session()->get('dataLogin');
@@ -207,7 +216,7 @@ class AppSaleController extends Controller
                 'Authorization' => 'Bearer ' . $dataLogin['access_token']
             ]
         ]);
-        $data =  $client->request('post', $this->baseUrl.'/api/v1/common/image/upload-sale', [
+        $data =  $client->request('post', $this->baseUrl . '/api/v1/common/image/upload-sale', [
             'multipart' => [$params]
         ]);
 
@@ -334,6 +343,25 @@ class AppSaleController extends Controller
         }
 
         return redirect()->back()->withInput($request->input())->withErrors(['message_error' => $result['error']['message'] ?? $result['data']['message']]);
+    }
+
+    public function getDistributor(Request $request){
+        $dataLogin = session()->get('dataLogin');
+        $page = $request->get('page') ?? 1;
+        $term = $request->get('term') ?? '';
+        $option['base_url'] = $this->baseUrl;
+        $header = [
+            'Authorization' => 'Bearer ' . $dataLogin['access_token']
+        ];
+        $params = [
+            'page' => $page,
+            'term' => $term,
+            'length' => 10
+        ];
+        $this->setOptions($option);
+        $result = $this->get('api/v1/distributor/list', $params, $header);
+
+        return $result['data'];
     }
 
     public function checkout(Request $request)
