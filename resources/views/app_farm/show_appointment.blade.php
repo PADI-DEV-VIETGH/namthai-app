@@ -91,11 +91,11 @@
                             <div class="full">
                                 <div class="col-md-12 line-30">
                                     <label class="control-label">Ảnh vật nuôi</label>
-                                    <div class="list-images"><span> <img
-                                        src="/namthai/assets/images/thumb1.png" /></span><span> <img
-                                        src="/namthai/assets/images/thumb2.png" /></span><span> <img
-                                        src="/namthai/assets/images/thumb1.png" /></span><span> <img
-                                        src="/namthai/assets/images/thumb2.png" /></span></div>
+                                    <div class="list-images">
+                                        @foreach($appointment['list_image'] as $value)
+                                        <span><img src="{{ $value }}" /></span>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                             <div class="full mrb-10">

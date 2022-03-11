@@ -24,21 +24,18 @@ Route::get('get-animals', [AppFarmController::class, 'getAnimals'])->name('get.a
 
 Route::group(['prefix' => 'app-farm'], function() {
     Route::get('home', [AppFarmController::class, 'home'])->name('app_farm.home');
-
     Route::get('login', [AppFarmController::class, 'login'])->name('app_farm.login');
     Route::post('login', [AppFarmController::class, 'postLogin'])->name('app_farm.post.login');
-
     Route::get('register', [AppFarmController::class, 'register'])->name('app_farm.register');
     Route::post('register', [AppFarmController::class, 'postRegister'])->name('app_farm.post.register');
-
     Route::get('otp', [AppFarmController::class, 'otp'])->name('app_farm.otp');
     Route::get('resend_otp', [AppFarmController::class, 'resendOtp'])->name('app_farm.resend.otp');
     Route::post('otp', [AppFarmController::class, 'postOtp'])->name('app_farm.post.otp');
-
     Route::get('create-appointment', [AppFarmController::class, 'createAppointment'])->name('app_farm.create_appointment');
     Route::post('create-appointment', [AppFarmController::class, 'postCreateAppointment'])->name('app_farm.post.create_appointment');
     Route::get('list-appointment', [AppFarmController::class, 'listAppointment'])->name('app_farm.list_appointment');
     Route::get('show-appointment/{id}', [AppFarmController::class, 'showAppointment'])->name('app_farm.show_appointment');
+    Route::post('upload_file', [AppFarmController::class, 'uploadFile'])->name('app_farm.upload_file');
 });
 
 Route::group(['prefix' => 'app-sale'], function() {

@@ -9,8 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class AppSaleController extends Controller
 {
-    private $baseUrl = 'http://127.0.0.1:8080';
+    private $baseUrl;
 
+    public function __construct()
+    {
+        $this->baseUrl = env('BASE_URL');
+    }
+    
     public function login()
     {
         return view('app_sale.login');
