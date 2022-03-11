@@ -43,8 +43,12 @@ Route::group(['prefix' => 'app-farm'], function() {
 Route::group(['prefix' => 'app-sale'], function() {
     Route::get('login', [AppSaleController::class, 'login'])->name('app_sale.login');
     Route::post('login', [AppSaleController::class, 'postLogin'])->name('app_sale.post.login');
+
     Route::get('home', [AppSaleController::class, 'home'])->name('app_sale.home');
+
     Route::get('check_in', [AppSaleController::class, 'checkIn'])->name('app_sale.check_in');
+    Route::get('checkout', [AppSaleController::class, 'checkOut'])->name('app_sale.checkout');
+
     Route::get('list_working_plan', [AppSaleController::class, 'listWorkingPlan'])->name('app_sale.list_working_plan');
     Route::get('product_inventory', [AppSaleController::class, 'productInventory'])->name('app_sale.product_inventory');
     Route::get('create_order', [AppSaleController::class, 'createOrder'])->name('app_sale.create_order');
@@ -53,5 +57,7 @@ Route::group(['prefix' => 'app-sale'], function() {
     Route::get('appointment', [AppSaleController::class, 'appointment'])->name('app_sale.appointment');
     Route::post('store_appointment', [AppSaleController::class, 'storeAppointment'])->name('app_sale.store_appointment');
     Route::post('upload_file', [AppSaleController::class, 'uploadFile'])->name('app_sale.upload_file');
+    Route::post('upload_file_selfie', [AppSaleController::class, 'uploadFileSelfie'])->name('app_sale.upload_file_selfie');
     Route::get('create_prescription', [AppSaleController::class, 'createPrescription'])->name('app_sale.create_prescription');
+    Route::post('store_check_in', [AppSaleController::class, 'storeCheckIn'])->name('app_sale.store_check_in');
 });

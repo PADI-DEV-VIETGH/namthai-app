@@ -50,8 +50,9 @@
                                             <div class="date">{{ $workingPlan['day_of_week']. ' ngày ' . Carbon\Carbon::createFromFormat('Y-m-d', $workingPlan['date'])->format('d/m/Y') }}</div>
                                             <div class="code">{{ $workingPlan['addressable']['type'] == 'farm'? "Mã farm: " : "Mã đại lý: " }}{{ $workingPlan['addressable']['data']['code'] }}</div>
                                             <div class="address">{{ $workingPlan['addressable']['data']['addr_detail'] }}</div>
+                                            <input type="hidden" name="id" class="id_address" value="{{ $workingPlan['id'] }}">
                                         </div>
-                                        <div class="cnt-img-map"><img src="{{ $workingPlan['addressable']['data']['image'] ? $workingPlan['addressable']['data']['image'] : '/namthai/assets/images/map.png' }}" alt="" /></div>
+                                        <div class="cnt-img-map"><img class="image" src="{{ $workingPlan['addressable']['data']['image'] ? $workingPlan['addressable']['data']['image'] : '/namthai/assets/images/map.png' }}" alt="" /></div>
                                     </div>
                                 </a>
                             @endforeach
@@ -83,6 +84,8 @@
             'date' : $(e).find('.date').text(),
             'code' : $(e).find('.code').text(),
             'address' : $(e).find('.address').text(),
+            'id' : $(e).find('.id_address').val(),
+            'image' : $(e).find('.image').attr('src'),
         };
         localStorage.setItem('dataCheckIn', JSON.stringify(array));
         if (localStorage.getItem('dataCheckIn')) {

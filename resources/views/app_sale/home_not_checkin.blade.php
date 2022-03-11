@@ -72,17 +72,17 @@
                         <div class="list-action">
                             <ul>
                                 <li>
-                                    {{--@if(!$dataLogin)--}}
+                                    @if(isset($dataCheckIn) && $dataCheckIn)
+                                        <a href="{{ route('app_sale.checkout') }}">
+                                            <div class="thumb"><img src="/namthai/assets/images/check.png" /></div>
+                                            <div class="text">Checkout</div>
+                                        </a>
+                                    @else
                                         <a href="{{ route('app_sale.list_working_plan') }}">
                                             <div class="thumb"><img src="/namthai/assets/images/check.png" /></div>
                                             <div class="text">Checkin</div>
                                         </a>
-                                    {{--@else--}}
-                                        {{--<a href="#">--}}
-                                            {{--<div class="thumb"><img src="/namthai/assets/images/check.png" /></div>--}}
-                                                {{--<div class="text">Checkout</div>--}}
-                                        {{--</a>--}}
-                                    {{--@endif--}}
+                                    @endif
                                 </li>
                                 <li>
                                     <a href="#">
@@ -96,12 +96,14 @@
                                         <div class="text">Kiểm kê hàng hóa</div>
                                     </a>
                                 </li>
+                                @if(isset($dataCheckIn) && $dataCheckIn)
                                 <li>
                                     <a href="{{ route('app_sale.appointment') }}">
                                         <div class="thumb"><img src="/namthai/assets/images/don.png" /></div>
                                         <div class="text">Thăm khám</div>
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </div>
                     </section>

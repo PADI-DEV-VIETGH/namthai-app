@@ -128,7 +128,7 @@
     <script type="text/javascript" src="/namthai/assets/js/customer.js"></script>
     <script>
         $('#createPrescription').click(function () {
-            let url = '{!! route('app_sale.prescription') !!}';
+            let url = '{!! route('app_sale.store_appointment') !!}';
             let form_data = new FormData($('#formPrescription')[0]);
             form_data.append('_token', '{{ csrf_token() }}');
             $.ajax({
@@ -150,7 +150,7 @@
         function html(src) {
             return `<div class="upload-images_input">
                         <img src="${src}" class="img-bg" />
-                        <div class="upload__img-close">
+                        <div class="abc-close">
                     </div>
                     <div>
                         <label>Comment</label>
