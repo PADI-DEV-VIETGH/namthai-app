@@ -52,6 +52,7 @@ Route::group(['prefix' => 'app-sale'], function() {
     Route::get('list_working_plan', [AppSaleController::class, 'listWorkingPlan'])->name('app_sale.list_working_plan');
     Route::get('product_inventory', [AppSaleController::class, 'productInventory'])->name('app_sale.product_inventory');
     Route::get('create_order', [AppSaleController::class, 'createOrder'])->name('app_sale.create_order');
+    Route::post('create_order', [AppSaleController::class, 'postCreateOrder'])->name('app_sale.post.create_order');
     Route::get('order', [AppSaleController::class, 'order'])->name('app_sale.order');
     Route::get('prescription', [AppSaleController::class, 'prescription'])->name('app_sale.prescription');
     Route::get('appointment', [AppSaleController::class, 'appointment'])->name('app_sale.appointment');

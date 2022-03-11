@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class AppSaleController extends Controller
 {
@@ -110,7 +111,33 @@ class AppSaleController extends Controller
 
     public function postCreateOrder(Request $request)
     {
+        $dataForm = $request->all();
+        $dataLogin = session()->get('dataLogin');
+        $productVariant = [];
+        foreach($dataForm['product_variant_id'] as $key => $value){
+            $productVariant[] = [
+                'id' => $value,
+                'quantity' => $dataForm['quantity'][$key]
+            ];
+        }
+        $option['base_url'] = $this->baseUrl;
+        $header = [
+            'Authorization' => 'Bearer ' . $dataLogin['access_token']
+        ];
+        $params = [
+            'distributor_id' => $dataForm['distributor_id'],
+            'total_amount' => 0,
+            'product_variant' => $productVariant
+        ];
 
+        $this->setOptions($option);
+        $result = $this->post('api/v1/order/create', $params, $header);
+        
+        if (isset($result['status']) && $result['status'] == 200) {
+            return redirect(route('app_sale.order'))->with(['message_success' => 'Tạo đơn hàng thành công']);
+        } else {
+            return  Redirect::back()->withInput($request->input())->withErrors(['message_error' => $result['error']['message'] ?? $result['data']['message']]);
+        }
     }
     public function order(Request $request)
     {
@@ -405,4 +432,55 @@ class AppSaleController extends Controller
         return view('app_sale.create_prescription');
     }
 
+    public function searchProduct(Request $request){
+        $dataLogin = session()->get('dataLogin');
+        $page = $request->get('page') ?? 1;
+        $keyword = $request->get('keyword') ?? '';
+        $option['base_url'] = $this->baseUrl;
+        $header = [
+            'Authorization' => 'Bearer ' . $dataLogin['access_token']
+        ];
+        $params = [
+            'page' => $page,
+            'length' => 10,
+            'keyword' => $keyword
+        ];
+        $this->setOptions($option);
+        $result = $this->get('api/v1/products/search', $params, $header);
+        
+        $data['html'] = '';
+        if(isset($result['status']) && $result['status'] == 200){
+            $data['status'] = 200;
+            $products = $result['data']['results'];
+            if(count($products) > 0){
+                foreach($products as $product){
+                    $product_variants = $product['product_variant']??[];
+                    foreach($product_variants as $product_variant){
+                        $data['html'] .= '
+                            <tr data-id="'.$product['id'].'" data-code="'.$product['code'].'" data-name="'.$product['name']. ' - '.$product_variant['name'].'">
+                                <td>'.$product['code'].'</td>
+                                <td>'.$product['name']. ' - '.$product_variant['name'].'</td>
+                            </tr>
+                        ';
+                    }
+                }
+            }else{
+                $data['html'] = '
+                    <tr>
+                        <td colspan="2">Không có dữ liệu</td>
+                    </tr>
+                ';
+            }
+            
+        }else{
+            $data['status'] = 500;
+            $data['html'] = '
+                <tr>
+                    <td colspan="2">Không có dữ liệu</td>
+                </tr>
+            ';
+        }
+
+        return $data;
+    }
 }
