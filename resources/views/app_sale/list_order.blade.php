@@ -38,6 +38,7 @@
                             <div class="title-page full border-bottom mrb-30">
                                 <h3 class="bold text-center">Danh sách đơn đặt hàng</h3>
                             </div>
+                            @include('alert')
                             <button class="btn btn-success btn-small" style="margin-bottom: 10px;" id="create-order">Tạo
                                 đơn hàng</button>
                             <div class="list-thamkham">

@@ -22,76 +22,105 @@
     <link rel="stylesheet" type="text/css" href="/namthai/assets/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/namthai/assets/css/custom.css">
     <link rel="stylesheet" type="text/css" href="/namthai/assets/css/admin.css">
+    <style>
+        #sugget-result {
+            width: calc(100% - 180px);
+            float: right;
+            position: absolute;
+            right: 15px;
+            background: #fff;
+            top: 35px;
+            z-index: 10;
+            border: 1px solid #ddd;
+            border-top: 0;
+            display: none;
+        }
 
+        #sugget-result table {
+            margin-bottom: 0;
+        }
+
+        #sugget-result tr {
+            cursor: pointer;
+        }
+
+        #sugget-result td {
+            font-size: 14px;
+        }
+
+        .image-loading {
+            position: absolute;
+            right: 10px;
+            width: 40px;
+            top: -2px;
+            display: none;
+        }
+
+    </style>
 </head>
 
 <body class="page-header-fixed page-quick-sidebar-over-content">
 
     <div class="page-container">
+        <form action="{!! route('app_sale.post.create_order') !!}" method="post" id="formOrder">
+            @csrf
+            <div class="page-content-wrapper page-register">
+                <div class="page-content">
+                    <div class="main-body-content member-page">
+                        <div class="member-title-table">
+                            <div class="logo text-center"><img src="/namthai/assets/images/logo.png" width="100px" />
+                            </div>
+                            <div class="title-page full border-bottom mrb-30">
+                                <h3 class="bold text-center">Tạo đơn hàng</h3>
+                            </div>
+                            @include('alert')
+                            <div class="full border-full content-detail pad-20-30 mrb-40">
+                                <div class="full">
+                                    <div class="col-md-3 col-xs-3">
+                                        <label class="control-label">Chọn Đại lý</label>
+                                    </div>
+                                    <div class="col-md-9 col-xs-9">
+                                        <select class="form-select form-control js-example-basic-single text-left"
+                                            aria-label="Default select example" id="distributor" name="distributor_id">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="full" style="position: relative">
+                                    <div class="col-md-3 col-xs-3">
+                                        <label class="control-label">Tên sản phẩm</label>
+                                    </div>
+                                    <div class="col-md-9 col-xs-9">
+                                        <input class="form-control" type="text" placeholder="Cám" id="keyword"
+                                            style="color: #505050;font-size: 16px;" />
+                                    </div>
+                                    <img src="https://stg.namthai.paditech.org/assets/img/loader.svg"
+                                        class="image-loading">
+                                    <div id="sugget-result">
+                                        <table class="table">
+                                            <tr>
+                                                <td>Mã SP</td>
+                                                <td>Tên SP</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="full">
+                                    <div class="col-md-12">
+                                        <label class="control-label">Loại hàng hóa</label>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <table class="table list-product-variant">
+                                            <thead>
+                                                <tr>
+                                                    <th>Mã</th>
+                                                    <th>Tên</th>
+                                                    <th class="text-center">SL </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-        <div class="page-content-wrapper page-register">
-            <div class="page-content">
-                <div class="main-body-content member-page">
-                    <div class="member-title-table">
-                        <div class="logo text-center"><img src="/namthai/assets/images/logo.png" width="100px" /></div>
-                        <div class="title-page full border-bottom mrb-30">
-                            <h3 class="bold text-center">Tạo đơn hàng</h3>
-                        </div>
-                        <div class="full border-full content-detail pad-20-30 mrb-40">
-                            <div class="full">
-                                <div class="col-md-3 col-xs-3">
-                                    <label class="control-label">Chọn Đại lý</label>
-                                </div>
-                                <div class="col-md-9 col-xs-9">
-                                    <select class="form-select form-control js-example-basic-single text-left"
-                                        aria-label="Default select example" id="distributor">
-                                        <option selected="selected">Đại lý</option>
-                                        <option value="1">Đại lý A</option>
-                                        <option value="2">Đại lý B</option>
-                                        <option value="3">Đại lý C</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="full">
-                                <div class="col-md-3 col-xs-3">
-                                    <label class="control-label">Tên sản phẩm</label>
-                                </div>
-                                <div class="col-md-9 col-xs-9">
-                                    <input class="form-control" type="text" placeholder="Cám" />
-                                </div>
-                            </div>
-                            <div class="full">
-                                <div class="col-md-12">
-                                    <label class="control-label">Loại hàng hóa</label>
-                                </div>
-                                <div class="col-md-12">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>STT</th>
-                                                <th>Mã</th>
-                                                <th>Tên</th>
-                                                <th class="text-center">SL </th>
-                                                <th>Đơn vị</th>
-                                                <th>CK</th>
-                                                <th>Tiền</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Cám</td>
-                                                <td class="text-center">
-                                                    <input type="text" placeholder="1000">
-                                                </td>
-                                                <td>bao</td>
-                                                <td>5%</td>
-                                                <td>10tr</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="total bold"><strong>Tổng tiền:</strong><strong>40 000 000</strong>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -105,9 +134,10 @@
                 </div>
                 <!-- .member-main-->
             </div>
-            <!-- .page-content-->
-        </div>
-        <!-- .member-->
+        </form>
+        <!-- .page-content-->
+    </div>
+    <!-- .member-->
     </div>
     <!--.page-container-->
 
@@ -132,10 +162,56 @@
                     return 'Không có kết quả';
                 }
             },
-            ajax:{
+            ajax: {
                 url: "{!! route('get.distributors') !!}",
                 dataType: 'json'
             }
+        });
+        let timeout = null;
+        $(`#keyword`).on('keyup', function() {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                let keyword = $(this).val();
+                $.ajax({
+                    url: "{!! route('search.products') !!}",
+                    method: 'get',
+                    dataType: 'json',
+                    data: {
+                        'keyword': keyword
+                    },
+                    beforeSend: function() {
+                        $('#sugget-result .table tbody').html(
+                            '<tr><td>Mã SP</td><td>Tên SP</td></tr>');
+                        $('#sugget-result').hide();
+                        $('.image-loading').show();
+                    },
+                    success: function(data) {
+                        $('#sugget-result .table tbody').append(data.html);
+                        $('#sugget-result').show();
+                        $('.image-loading').hide();
+                    },
+                    error: function() {
+                        $('.image-loading').hide();
+                    }
+                });
+            }, 1000);
+        });
+        $('body').on('click', '#sugget-result tr', function() {
+            let code = $(this).attr('data-code');
+            let name = $(this).attr('data-name');
+            let id = $(this).attr('data-id');
+            let html = `
+                <tr>
+                    <td>${code}</td>
+                    <td>${name}</td>
+                    <td class="text-center">
+                        <input name="quantity[]" type="text" placeholder="1000" style="width: 80px;">
+                        <input name="product_variant_id[]" value="${id}" type="hidden">
+                    </td>
+                </tr>
+            `;
+            $('.list-product-variant tbody').append(html);
+            $('#sugget-result').hide();
         });
     </script>
 </body>

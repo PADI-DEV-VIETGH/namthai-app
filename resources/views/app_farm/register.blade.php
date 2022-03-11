@@ -15,10 +15,10 @@
                             <div class="full border-full pad-20-30 mrb-40">
                                 <div class="full mrb-10">
                                     <div class="col-md-3 line-30">
-                                        <label class="control-label">Họ tên</label>
+                                        <label class="control-label">Tên trang trại</label>
                                     </div>
                                     <div class="col-md-9">
-                                        <input class="form-control" name="full_name" type="text" placeholder="Nguyễn Văn A" value="{{ old('full_name') }}"/>
+                                        <input class="form-control" name="full_name" type="text" placeholder="Tên trang trại" value="{{ old('full_name') }}"/>
                                     </div>
                                 </div>
                                 <div class="full mrb-10">
