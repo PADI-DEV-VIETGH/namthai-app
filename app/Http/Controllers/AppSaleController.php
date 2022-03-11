@@ -153,8 +153,7 @@ class AppSaleController extends Controller
 
         $option['base_url'] = $this->baseUrl;
         $this->setOptions($option);
-        $status = $request->get('status');
-        $comments = $request->get('comment');
+
         // chờ api anh Nghĩa
 
         return view('app_sale.create_prescription');
@@ -393,6 +392,17 @@ class AppSaleController extends Controller
         }
 
         return redirect()->back()->withInput($request->input())->withErrors(['message_error' => $result['error']['message'] ?? $result['data']['message']]);
+    }
+
+    public function createPrescription()
+    {
+        $dataCheckIn = session()->get('dataCheckIn');
+        dd($dataCheckIn);
+        if (!$dataCheckIn) {
+            return redirect()->back();
+        }
+
+        return view('app_sale.create_prescription');
     }
 
 }
