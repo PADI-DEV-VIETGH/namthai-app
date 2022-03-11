@@ -51,6 +51,8 @@
                                             <div class="code">{{ $workingPlan['addressable']['type'] == 'farm'? "Mã farm: " : "Mã đại lý: " }}{{ $workingPlan['addressable']['data']['code'] }}</div>
                                             <div class="address">{{ $workingPlan['addressable']['data']['addr_detail'] }}</div>
                                             <input type="hidden" name="id" class="id_address" value="{{ $workingPlan['id'] }}">
+                                            <input type="hidden" name="type" class="type" value="{{ $workingPlan['addressable']['type'] }}">
+                                            <input type="hidden" name="phone_number" class="phone_number" value="{{ $workingPlan['addressable']['data']['phone_number'] }}">
                                         </div>
                                         <div class="cnt-img-map"><img class="image" src="{{ $workingPlan['addressable']['data']['image'] ? $workingPlan['addressable']['data']['image'] : '/namthai/assets/images/map.png' }}" alt="" /></div>
                                     </div>
@@ -85,6 +87,8 @@
             'code' : $(e).find('.code').text(),
             'address' : $(e).find('.address').text(),
             'id' : $(e).find('.id_address').val(),
+            'type' : $(e).find('.type').val(),
+            'phone_number' : $(e).find('.phone_number').val(),
             'image' : $(e).find('.image').attr('src'),
         };
         localStorage.setItem('dataCheckIn', JSON.stringify(array));

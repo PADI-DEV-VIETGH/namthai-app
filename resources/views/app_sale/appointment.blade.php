@@ -43,31 +43,19 @@
                                 <div class="col-md-3 col-xs-3">
                                     <label class="control-label">Tên FARM :</label>
                                 </div>
-                                <div class="col-md-9 col-xs-9"><span>Nguyễn Văn A</span></div>
+                                <div class="col-md-9 col-xs-9"><span>{{ $dataCheckIn['name_farm'] }}</span></div>
                             </div>
                             <div class="full">
                                 <div class="col-md-3 col-xs-3">
                                     <label class="control-label">Địa chỉ :</label>
                                 </div>
-                                <div class="col-md-9 col-xs-9"><span>539 Vũ Tông Phan - Thanh Xuân</span></div>
+                                <div class="col-md-9 col-xs-9"><span>{{ $dataCheckIn['address'] }}</span></div>
                             </div>
                             <div class="full">
                                 <div class="col-md-3 col-xs-3">
                                     <label class="control-label">Số điện thoại :</label>
                                 </div>
-                                <div class="col-md-9 col-xs-9"><span>012345789</span></div>
-                            </div>
-                            <div class="full">
-                                <div class="col-md-12 col-xs-12">
-                                    <label class="control-label">Trạng thái thăm khám</label>
-                                </div>
-                                <div class="col-md-12 col-xs-12">
-                                    <select name="status" class="form-control js-example-basic-single text-left"
-                                        aria-label="Default select example">
-                                        <option value="1" selected="selected">Đã xác nhận</option>
-                                        <option value="2">Chưa xác nhận</option>
-                                    </select>
-                                </div>
+                                <div class="col-md-9 col-xs-9"><span>{{ $dataCheckIn['phone_number'] }}</span></div>
                             </div>
                             <div class="full">
                                 <div class="col-md-12 col-xs-12">
