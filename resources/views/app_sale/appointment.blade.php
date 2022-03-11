@@ -150,7 +150,7 @@
         function html(src) {
             return `<div class="upload-images_input">
                         <img src="${src}" class="img-bg" />
-                        <div class="upload__img-close">
+                        <div class="abc-close">
                     </div>
                     <div>
                         <label>Comment</label>

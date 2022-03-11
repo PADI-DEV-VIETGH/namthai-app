@@ -47,6 +47,8 @@
         <div class="page-content-wrapper">
             <div class="container">
                 <div class="page-content">
+                    <form action="{{ route('app_sale.store_check_in') }}" id="storeCheckIn" method="post">
+                        @csrf
                     <section class="content-map">
                         <div class="title-sec">Địa điểm làm việc</div>
                         <div class="cnt-map-check">
@@ -55,41 +57,45 @@
                                 <div class="date"></div>
                                 <div class="code"></div>
                                 <div class="address"></div>
+                                <input type="hidden" name="idAddress" value="" id="idAddress" />
                             </div>
-                            <div class="cnt-img-map"><img src="/namthai/assets/images/map.png" alt="" /></div>
+                            <div class="cnt-img-map"><img class="imageAddress" src="" alt="" /></div>
                         </div>
                     </section>
                     <section class="content-sec mrb-10">
                         <div class="title-sec">Chụp ảnh Selfie</div>
                         <div class="list-action">
                             <div class="upload__box">
-                                <div class="upload__img-wrap"></div>
+                                <div class="upload__img-wrap_selfie"></div>
                                 <div class="upload__btn-box">
                                     <label class="upload__btn"><span> <i class="fas fa-plus"></i></span>
-                                        <input class="upload__inputfile" type="file" multiple="" data-max_length="20" />
+                                        <input class="upload__inputfile" type="file" id="selfie" name="selfie"  accept="image/*"/>
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="title-sec">Ảnh nơi thăm khám (tối đa 12 ảnh)</div>
                         <div class="list-action">
-                            <div class="upload__box">
-                                <div class="upload__img-wrap"></div>
+                            <div class="upload__boxs">
+                                <div class="upload__img-wraps"></div>
                                 <div class="upload__btn-box">
                                     <label class="upload__btn"><span> <i class="fas fa-plus"></i></span>
-                                        <input class="upload__inputfile" type="file" multiple="" data-max_length="12" />
+                                        <input name="image" id="file" accept="image/*" class="upload__inputfiles" type="file" data-max_length="12" />
                                     </label>
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" name="latLng" id="latLng" />
+                        <input type="hidden" name="arrImages" id="arrImage">
+                        <input type="hidden" name="imageSelfie" id="imageSelfie">
+                        <input type="hidden" name="idAddress" class="id_address" />
                         <div class="title-sec">Tra cứu Vị trí</div>
                         <div class="list-action mrb-20">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.184415962454!2d105.81262141533179!3d20.985243494637427!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ad7f8248c94d%3A0xd07940d3ae8d1e32!2zNTM5IFbFqSBUw7RuZyBQaGFuLCBUaGFuaCBYdcOibiBIw6AgTuG7mWk!5e0!3m2!1svi!2s!4v1646189747508!5m2!1svi!2s"
-                                width="100%" height="160" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        <div id="map" style="height: 500px; width: 100%;"></div>
                         </div>
-                        <button class="btn green pad-8-50 wdt-100">Chấm công</button>
+                        <button type="submit" class="btn green pad-8-50 wdt-100">Chấm công</button>
                     </section>
+                    </form>
                     <!-- .block-1-->
                 </div>
                 <!-- .member-main-->
@@ -98,8 +104,36 @@
         </div>
         <!-- .member-->
     </div>
+    <style>
+        .upload-images_selfie_input {
+            height: 200px;
+            position: relative;
+            width: 200px;
+        }
+        .upload-images_selfie_input img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            padding-bottom: 20px !important;
+        }
+        .upload-images_input {
+            height: 200px;
+            position: relative;
+            width: 200px;
+        }
+        .upload-images_input img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            padding-bottom: 20px !important;
+        }
+    </style>
     <!--.page-container-->
-
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPjQoCIJAW88qJrqBOxpd-HEXAoTTRlQk&callback=initMap&v=weekly"
+            async
+    ></script>
     <!-- Vendor jQuery (CORE PLUGINS - METRONIC)-->
     <script type="text/javascript" src="/namthai/assets/js/jquery.min.js"></script>
     <script type="text/javascript" src="/namthai/assets/js/bootstrap.min.js"> </script>
@@ -117,6 +151,104 @@
         $('.date').html(objCheckIn.date);
         $('.code').html(objCheckIn.code);
         $('.address').html(objCheckIn.address);
+        $('.id_address').val(parseInt(objCheckIn.id));
+        $('.imageAddress').attr('src',objCheckIn.image);
+
+        function initMap() {
+            const myLatlng = { lat: 21.030653, lng: 105.847130 };
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 12,
+                center: myLatlng,
+            });
+            // Create the initial InfoWindow.
+            let infoWindow = new google.maps.InfoWindow({
+                content: "Click the map to get Lat/Lng!",
+                position: myLatlng,
+            });
+
+            infoWindow.open(map);
+            // Configure the click listener.
+            map.addListener("click", (mapsMouseEvent) => {
+                // Close the current InfoWindow.
+                infoWindow.close();
+                // Create a new InfoWindow.
+                infoWindow = new google.maps.InfoWindow({
+                    position: mapsMouseEvent.latLng,
+                });
+                infoWindow.setContent(
+                    JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+                );
+                $('#latLng').val(JSON.stringify(mapsMouseEvent.latLng.toJSON()));
+                infoWindow.open(map);
+            });
+        }
+
+        function html(src) {
+            return `<div class="upload-images_input">
+                        <img src="${src}" class="img-bg" />
+                        <div class="abc-close">
+                    </div>
+                    `
+        }
+        function htmlSelfie(src) {
+            return `<div class="upload-images_selfie_input">
+                        <img src="${src}" class="img-bg-selfie" />
+                        <div class="abc-close">
+                    </div>
+                    `
+        }
+        $('#file').on('change', function () {
+            let url = '{!! route('app_sale.upload_file') !!}';
+            let form_data = new FormData($('#storeCheckIn')[0]);
+            form_data.append('_token', '{{ csrf_token() }}');
+            $.ajax({
+                url: url,
+                method: 'POST',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status === 200) {
+                        $('.upload__img-wraps').append(html(data.data.image_url));
+                        let arrayImage = [];
+                        $('.img-bg').each(function () {
+                            arrayImage.push($(this).attr('src'));
+                        })
+                        $('#arrImage').val(arrayImage);
+                    }
+                },
+                error: function (error) {
+                    return error;
+                }
+            })
+        });
+        $('#selfie').on('change', function () {
+            let url = '{!! route('app_sale.upload_file_selfie') !!}';
+            let form_data = new FormData($('#storeCheckIn')[0]);
+            console.log(form_data);
+            form_data.append('_token', '{{ csrf_token() }}');
+            $.ajax({
+                url: url,
+                method: 'POST',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status === 200) {
+                        $('.upload__img-wrap_selfie').append(htmlSelfie(data.data.image_url));
+                        console.log($(this).attr('src'));
+                        $('#imageSelfie').val($('.img-bg-selfie').attr('src'));
+                    }
+                },
+                error: function (error) {
+                    return error;
+                }
+            })
+        });
     </script>
 </body>
 

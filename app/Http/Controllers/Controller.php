@@ -33,7 +33,7 @@ class Controller extends BaseController
                     $data = $response->json();
                 }
                 return $data;
-            }else{
+            } else {
                 return $response->json();
             }
         } catch (\Exception $e) {
@@ -43,7 +43,7 @@ class Controller extends BaseController
 
     public function post($endPoint = "", $params = [], $header = [])
     {
-        try{
+        try {
             $header[] = [
                 'Content-Type' => 'application/json'
             ];
@@ -56,12 +56,35 @@ class Controller extends BaseController
                     $data = $response->json();
                 }
                 return $data;
-            }else{
-                throw new \Exception($response->getReasonPhrase());
+            } else {
+                return $response->json();
             }
         } catch (\Exception $e) {
             throw $e;
         }
+    }
 
+    public function put($endPoint = "", $params = [], $header = [])
+    {
+        try {
+            $header[] = [
+                'Content-Type' => 'application/json'
+            ];
+            $url = $this->baseUrl . '/' . $endPoint;
+            $response = Http::withHeaders($header)
+                ->put($url, $params);
+
+            if ($response->successful()) {
+                $data = [];
+                if ($response->successful()) {
+                    $data = $response->json();
+                }
+                return $data;
+            } else {
+                return $response->json();
+            }
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 }
