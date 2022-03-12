@@ -190,7 +190,14 @@ class AppSaleController extends Controller
     // store appointment
     public function appointment(Request $request)
     {
-        return view('app_sale.appointment');
+        $dataLogin = session()->get('dataLogin');
+
+        if (!$dataLogin) {
+            return redirect(route('app_sale.login'));
+        }
+        $dataCheckIn = session()->get('dataCheckIn');
+
+        return view('app_sale.appointment', compact('dataCheckIn'));
     }
 
     // store appointment
@@ -327,6 +334,10 @@ class AppSaleController extends Controller
         $addressId = $request->get('idAddress');
         $arrImages = $request->get('arrImages');
         $imageSelfie = $request->get('imageSelfie');
+        $type = $request->get('type');
+        $phoneNumber = $request->get('phone_number');
+        $nameFarm = $request->get('nameFarm');
+        $address = $request->get('address');
         $latLng = $request->get('latLng');
         $arrayLatLng = [];
 
@@ -362,7 +373,15 @@ class AppSaleController extends Controller
 
         $result = $this->post('api/v1/userCheckin', $params, $header);
         if (isset($result['status']) && $result['status'] == 200) {
-            session()->put('dataCheckIn', $result['data']);
+            $arrayType = [
+                'type' => $type,
+                'phone_number' => $phoneNumber,
+                'name_farm' => $nameFarm,
+                'address' => $address
+            ];
+            $dataCheckIn = array_merge($result['data'], $arrayType);
+
+            session()->put('dataCheckIn', $dataCheckIn);
             session()->save();
 
             return redirect()->route('app_sale.home');
@@ -424,7 +443,7 @@ class AppSaleController extends Controller
     public function createPrescription()
     {
         $dataCheckIn = session()->get('dataCheckIn');
-        dd($dataCheckIn);
+
         if (!$dataCheckIn) {
             return redirect()->back();
         }

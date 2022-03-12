@@ -89,6 +89,10 @@
                         <input type="hidden" name="arrImages" id="arrImage">
                         <input type="hidden" name="imageSelfie" id="imageSelfie">
                         <input type="hidden" name="idAddress" class="id_address" />
+                        <input type="hidden" name="type" class="typeFarmOrDistributor" />
+                        <input type="hidden" name="nameFarm" class="title" />
+                        <input type="hidden" name="address" class="addressFarm" />
+                        <input type="hidden" name="phone_number" class="phone_number" />
                         <div class="title-sec">Tra cứu Vị trí</div>
                         <div class="list-action mrb-20">
                         <div id="map" style="height: 500px; width: 100%;"></div>
@@ -148,10 +152,14 @@
         let dataCheckIn = localStorage.getItem('dataCheckIn');
         let objCheckIn = JSON.parse(dataCheckIn);
         $('.title-cnt').html(objCheckIn.title);
+        $('.title').val(objCheckIn.title);
+        $('.addressFarm').val(objCheckIn.address);
         $('.date').html(objCheckIn.date);
         $('.code').html(objCheckIn.code);
         $('.address').html(objCheckIn.address);
         $('.id_address').val(parseInt(objCheckIn.id));
+        $('.typeFarmOrDistributor').val(objCheckIn.type);
+        $('.phone_number').val(objCheckIn.phone_number);
         $('.imageAddress').attr('src',objCheckIn.image);
 
         function initMap() {
