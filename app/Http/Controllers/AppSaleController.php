@@ -244,7 +244,11 @@ class AppSaleController extends Controller
 
         $result = $this->post('api/v1/examination', $params, $header);
 
-        if (isset($result['status']) && $result['status'] == 200) {
+        if (isset($result['id']) && $result['id'] > 0) {
+            if ($this->wantsJson()) {
+                return response()->json(['status' => 200]);
+            }
+
             return redirect(route('app_sale.home'))->with(['message_success' => 'Cập nhật thăm khám thành công']);
         } else {
             return  Redirect::back()->withInput($request->input())->withErrors(['message_error' => $result['error']['message'] ?? $result['data']['message']]);
@@ -527,5 +531,11 @@ class AppSaleController extends Controller
         }
 
         return $data;
+    }
+
+    private function wantsJson()
+    {
+        $acceptable = request()->getAcceptableContentTypes();
+        return isset($acceptable[0]) && $acceptable[0] == 'application/json';
     }
 }
