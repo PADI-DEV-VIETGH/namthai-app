@@ -208,6 +208,8 @@ class AppSaleController extends Controller
         if (!$dataLogin) {
             return redirect(route('app_sale.login'));
         }
+        $dataCheckIn = session()->get('dataCheckIn');
+
         $arrayImage = [];
         if ($images = $request->get('arrImages')) {
             $arrayImage = explode(',', $images);
@@ -219,10 +221,34 @@ class AppSaleController extends Controller
             'Authorization' =>  'Bearer ' . $dataLogin['access_token']
         ];
         $this->setOptions($option);
-        $status = $request->get('status');
         $comments = $request->get('comment');
-        // chờ api anh Nghĩa
-        dd($arrayImage, $status, $comments);
+        $arrImageAndComment = [];
+
+        if(!empty($arrayImage)) {
+            foreach($arrayImage as $key => $image) {
+                foreach($comments as $k => $comment) {
+                    if ($key == $k) {
+                        $arrImageAndComment[] = [
+                            'image' => $image,
+                            'content' => $comment
+                        ];
+                    }
+                }
+            }
+        }
+
+        $params = [
+            'working_plan_detail_id' => $dataCheckIn['working_plan_detail_id'],
+            'images' => $arrImageAndComment
+        ];
+
+        $result = $this->post('api/v1/examination', $params, $header);
+        dd($result);
+        if (isset($result['status']) && $result['status'] == 200) {
+            return redirect(route('app_sale.home'))->with(['message_success' => 'Cập nhật thăm khám thành công']);
+        } else {
+            return  Redirect::back()->withInput($request->input())->withErrors(['message_error' => $result['error']['message'] ?? $result['data']['message']]);
+        }
     }
 
     public function uploadFile(Request $request)

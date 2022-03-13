@@ -90,7 +90,7 @@
                                         <div class="text">Lịch sử chấm công</div>
                                     </a>
                                 </li>
-                                @if(isset($dataCheckIn) && $dataCheckIn['type'] == 'distributor')
+                                @if(isset($dataCheckIn['type']) && $dataCheckIn['type'] == 'distributor')
                                 <li>
                                     <a href="{{ route('app_sale.product_inventory') }}">
                                         <div class="thumb"><img src="/namthai/assets/images/page.png" /></div>
@@ -98,14 +98,14 @@
                                     </a>
                                 </li>
                                 @endif
-                                {{--@if(isset($dataCheckIn) && $dataCheckIn['type'] == 'farm')--}}
+                                @if(isset($dataCheckIn['type']) && $dataCheckIn['type'] == 'farm')
                                 <li>
                                     <a href="{{ route('app_sale.appointment') }}">
                                         <div class="thumb"><img src="/namthai/assets/images/don.png" /></div>
                                         <div class="text">Thăm khám</div>
                                     </a>
                                 </li>
-                                {{--@endif--}}
+                                @endif
                             </ul>
                         </div>
                     </section>
