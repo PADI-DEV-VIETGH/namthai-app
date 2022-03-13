@@ -243,7 +243,7 @@ class AppSaleController extends Controller
         ];
 
         $result = $this->post('api/v1/examination', $params, $header);
-        dd($result);
+
         if (isset($result['status']) && $result['status'] == 200) {
             return redirect(route('app_sale.home'))->with(['message_success' => 'Cập nhật thăm khám thành công']);
         } else {
