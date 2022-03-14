@@ -55,10 +55,12 @@ Route::group(['prefix' => 'app-sale'], function() {
     Route::post('create_order', [AppSaleController::class, 'postCreateOrder'])->name('app_sale.post.create_order');
     Route::get('order', [AppSaleController::class, 'order'])->name('app_sale.order');
     Route::get('prescription', [AppSaleController::class, 'prescription'])->name('app_sale.prescription');
+    Route::post('store_prescription', [AppSaleController::class, 'storePrescription'])->name('app_sale.store_prescription');
     Route::get('appointment', [AppSaleController::class, 'appointment'])->name('app_sale.appointment');
     Route::post('store_appointment', [AppSaleController::class, 'storeAppointment'])->name('app_sale.store_appointment');
     Route::post('upload_file', [AppSaleController::class, 'uploadFile'])->name('app_sale.upload_file');
     Route::post('upload_file_selfie', [AppSaleController::class, 'uploadFileSelfie'])->name('app_sale.upload_file_selfie');
     Route::get('create_prescription', [AppSaleController::class, 'createPrescription'])->name('app_sale.create_prescription');
     Route::post('store_check_in', [AppSaleController::class, 'storeCheckIn'])->name('app_sale.store_check_in');
+    Route::get('get_animals', [AppSaleController::class, 'getAnimals'])->name('app_sale.get_animals');
 });
