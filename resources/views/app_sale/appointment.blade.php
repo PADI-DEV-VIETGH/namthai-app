@@ -128,7 +128,10 @@
                 data: form_data,
                 dataType: 'json',
                 success: function (data) {
-                    window.location.href = "{{ route('app_sale.create_prescription') }}";
+                    if (data.status === 200) {
+                        localStorage.setItem('idFarm', data.data);
+                        window.location.href = "{{ route('app_sale.create_prescription') }}";
+                    }
                 },
                 error: function (error) {
                     return error;

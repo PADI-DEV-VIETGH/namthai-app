@@ -42,7 +42,7 @@ class AppSaleController extends Controller
         ];
 
         $this->setOptions($option);
-        $dataLogin = $this->post('api/v1/sale/auth/login',$params);
+        $dataLogin = $this->post('api/v1/sale/auth/login', $params);
 
         if (isset($dataLogin['status']) && $dataLogin['status'] == 200) {
             session()->put('dataLogin', $dataLogin['data']);
@@ -51,7 +51,7 @@ class AppSaleController extends Controller
             return redirect()->route('app_sale.home');
         }
 
-        return  redirect()->back()->withInput($request->input())->withErrors(['message_error' => $dataLogin['error']['message'] ?? $dataLogin['data']['message']]);
+        return redirect()->back()->withInput($request->input())->withErrors(['message_error' => $dataLogin['error']['message'] ?? $dataLogin['data']['message']]);
 
     }
 
@@ -75,7 +75,7 @@ class AppSaleController extends Controller
         $option['base_url'] = $this->baseUrl;
         $header = [
             'Content-Type' => 'application/json',
-            'Authorization' =>  'Bearer ' . $dataLogin['access_token']
+            'Authorization' => 'Bearer ' . $dataLogin['access_token']
         ];
         $this->setOptions($option);
 
@@ -114,7 +114,7 @@ class AppSaleController extends Controller
         $dataForm = $request->all();
         $dataLogin = session()->get('dataLogin');
         $productVariant = [];
-        foreach($dataForm['product_variant_id'] as $key => $value){
+        foreach ($dataForm['product_variant_id'] as $key => $value) {
             $productVariant[] = [
                 'id' => $value,
                 'quantity' => $dataForm['quantity'][$key]
@@ -132,13 +132,14 @@ class AppSaleController extends Controller
 
         $this->setOptions($option);
         $result = $this->post('api/v1/order/create', $params, $header);
-        
+
         if (isset($result['status']) && $result['status'] == 200) {
             return redirect(route('app_sale.order'))->with(['message_success' => 'Tạo đơn hàng thành công']);
         } else {
-            return  Redirect::back()->withInput($request->input())->withErrors(['message_error' => $result['error']['message'] ?? $result['data']['message']]);
+            return Redirect::back()->withInput($request->input())->withErrors(['message_error' => $result['error']['message'] ?? $result['data']['message']]);
         }
     }
+
     public function order(Request $request)
     {
         $dataLogin = session()->get('dataLogin');
@@ -150,7 +151,7 @@ class AppSaleController extends Controller
         $option['base_url'] = $this->baseUrl;
         $header = [
             'Content-Type' => 'application/json',
-            'Authorization' =>  'Bearer ' . $dataLogin['access_token']
+            'Authorization' => 'Bearer ' . $dataLogin['access_token']
         ];
         $this->setOptions($option);
         $params = [
@@ -170,24 +171,40 @@ class AppSaleController extends Controller
     public function storePrescription(Request $request)
     {
         $dataLogin = session()->get('dataLogin');
-
         if (!$dataLogin) {
             return redirect(route('app_sale.login'));
         }
-        if ($images = $request->get('arrImages')) {
-            $arrayImage = explode(',', $images);
-        }
+
+        $header = [
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . $dataLogin['access_token']
+        ];
+
+        $params = [
+            'examination_id' => $request->get('examination_id'),
+            'animals' => $request->get('animals'),
+            'weight' => $request->get('weight'),
+            'quantity' => $request->get('quantity'),
+            'food' => $request->get('food'),
+            'symptom' => $request->get('symptom'),
+            'sickness' => $request->get('sickness'),
+            'prehistoric' => $request->get('prehistoric'),
+            'diagnostic' => $request->get('diagnostic'),
+            'product_variant_id' => $request->get('product_variant_id'),
+            'note' => $request->get('note'),
+        ];
 
         $option['base_url'] = $this->baseUrl;
         $this->setOptions($option);
+        $result = $this->post('api/v1/prescription/create', $params, $header);
+        if (isset($result['status']) && $result['status'] == 200) {
+            return redirect(route('app_sale.home'))->with(['message_success' => 'Tạo mới đơn hàng thành công']);
+        }
 
-        // chờ api anh Nghĩa
-
-        return view('app_sale.create_prescription');
+        return redirect()->back()->withInput($request->input())->withErrors(['message_error' => $result['error']['message'] ?? $result['data']['message']]);
     }
 
 
-    // store appointment
     public function appointment(Request $request)
     {
         $dataLogin = session()->get('dataLogin');
@@ -218,15 +235,15 @@ class AppSaleController extends Controller
         $option['base_url'] = $this->baseUrl;
         $header = [
             'Content-Type' => 'application/json',
-            'Authorization' =>  'Bearer ' . $dataLogin['access_token']
+            'Authorization' => 'Bearer ' . $dataLogin['access_token']
         ];
         $this->setOptions($option);
         $comments = $request->get('comment');
         $arrImageAndComment = [];
 
-        if(!empty($arrayImage)) {
-            foreach($arrayImage as $key => $image) {
-                foreach($comments as $k => $comment) {
+        if (!empty($arrayImage)) {
+            foreach ($arrayImage as $key => $image) {
+                foreach ($comments as $k => $comment) {
                     if ($key == $k) {
                         $arrImageAndComment[] = [
                             'image' => $image,
@@ -246,12 +263,12 @@ class AppSaleController extends Controller
 
         if (isset($result['id']) && $result['id'] > 0) {
             if ($this->wantsJson()) {
-                return response()->json(['status' => 200]);
+                return response()->json(['data'=> $result['id'], 'status' => 200]);
             }
 
             return redirect(route('app_sale.home'))->with(['message_success' => 'Cập nhật thăm khám thành công']);
         } else {
-            return  Redirect::back()->withInput($request->input())->withErrors(['message_error' => $result['error']['message'] ?? $result['data']['message']]);
+            return Redirect::back()->withInput($request->input())->withErrors(['message_error' => $result['error']['message'] ?? $result['data']['message']]);
         }
     }
 
@@ -279,7 +296,7 @@ class AppSaleController extends Controller
                 'Authorization' => 'Bearer ' . $dataLogin['access_token']
             ]
         ]);
-        $data =  $client->request('post', $this->baseUrl . '/api/v1/common/image/upload-sale', [
+        $data = $client->request('post', $this->baseUrl . '/api/v1/common/image/upload-sale', [
             'multipart' => [$params]
         ]);
 
@@ -289,6 +306,7 @@ class AppSaleController extends Controller
 
         return $data;
     }
+
     public function uploadFileSelfie(Request $request)
     {
         $dataLogin = session()->get('dataLogin');
@@ -313,7 +331,7 @@ class AppSaleController extends Controller
                 'Authorization' => 'Bearer ' . $dataLogin['access_token']
             ]
         ]);
-        $data =  $client->request('post', $this->baseUrl.'/api/v1/common/image/upload-sale', [
+        $data = $client->request('post', $this->baseUrl . '/api/v1/common/image/upload-sale', [
             'multipart' => [$params]
         ]);
 
@@ -324,7 +342,7 @@ class AppSaleController extends Controller
         return $data;
     }
 
-    public function prescription (Request $request)
+    public function prescription(Request $request)
     {
         $dataLogin = session()->get('dataLogin');
 
@@ -336,7 +354,7 @@ class AppSaleController extends Controller
         $option['base_url'] = $this->baseUrl;
         $header = [
             'Content-Type' => 'application/json',
-            'Authorization' =>  'Bearer ' . $dataLogin['access_token']
+            'Authorization' => 'Bearer ' . $dataLogin['access_token']
         ];
         $this->setOptions($option);
         $params = [
@@ -396,7 +414,7 @@ class AppSaleController extends Controller
         ];
 
         $header = [
-            'Authorization' =>  'Bearer ' . $dataLogin['access_token']
+            'Authorization' => 'Bearer ' . $dataLogin['access_token']
         ];
 
         $this->setOptions($option);
@@ -420,7 +438,8 @@ class AppSaleController extends Controller
         return redirect()->back()->withInput($request->input())->withErrors(['message_error' => $result['error']['message'] ?? $result['data']['message']]);
     }
 
-    public function getDistributor(Request $request){
+    public function getDistributor(Request $request)
+    {
         $dataLogin = session()->get('dataLogin');
         $page = $request->get('page') ?? 1;
         $term = $request->get('term') ?? '';
@@ -456,7 +475,7 @@ class AppSaleController extends Controller
         ];
 
         $header = [
-            'Authorization' =>  'Bearer ' . $dataLogin['access_token']
+            'Authorization' => 'Bearer ' . $dataLogin['access_token']
         ];
         $this->setOptions($option);
         $result = $this->put('api/v1/userCheckin', $params, $header);
@@ -472,16 +491,19 @@ class AppSaleController extends Controller
 
     public function createPrescription()
     {
+        $dataLogin = session()->get('dataLogin');
+
         $dataCheckIn = session()->get('dataCheckIn');
 
         if (!$dataCheckIn) {
             return redirect()->back();
         }
 
-        return view('app_sale.create_prescription');
+        return view('app_sale.create_prescription', compact('dataLogin','dataCheckIn'));
     }
 
-    public function searchProduct(Request $request){
+    public function searchProduct(Request $request)
+    {
         $dataLogin = session()->get('dataLogin');
         $page = $request->get('page') ?? 1;
         $keyword = $request->get('keyword') ?? '';
@@ -496,32 +518,32 @@ class AppSaleController extends Controller
         ];
         $this->setOptions($option);
         $result = $this->get('api/v1/products/search', $params, $header);
-        
+
         $data['html'] = '';
-        if(isset($result['status']) && $result['status'] == 200){
+        if (isset($result['status']) && $result['status'] == 200) {
             $data['status'] = 200;
             $products = $result['data']['results'];
-            if(count($products) > 0){
-                foreach($products as $product){
-                    $product_variants = $product['product_variant']??[];
-                    foreach($product_variants as $product_variant){
+            if (count($products) > 0) {
+                foreach ($products as $product) {
+                    $product_variants = $product['product_variant'] ?? [];
+                    foreach ($product_variants as $product_variant) {
                         $data['html'] .= '
-                            <tr data-id="'.$product['id'].'" data-code="'.$product['code'].'" data-name="'.$product['name']. ' - '.$product_variant['name'].'">
-                                <td>'.$product['code'].'</td>
-                                <td>'.$product['name']. ' - '.$product_variant['name'].'</td>
+                            <tr data-id="' . $product['id'] . '" data-code="' . $product['code'] . '" data-name="' . $product['name'] . ' - ' . $product_variant['name'] . '">
+                                <td>' . $product['code'] . '</td>
+                                <td>' . $product['name'] . ' - ' . $product_variant['name'] . '</td>
                             </tr>
                         ';
                     }
                 }
-            }else{
+            } else {
                 $data['html'] = '
                     <tr>
                         <td colspan="2">Không có dữ liệu</td>
                     </tr>
                 ';
             }
-            
-        }else{
+
+        } else {
             $data['status'] = 500;
             $data['html'] = '
                 <tr>
@@ -537,5 +559,30 @@ class AppSaleController extends Controller
     {
         $acceptable = request()->getAcceptableContentTypes();
         return isset($acceptable[0]) && $acceptable[0] == 'application/json';
+    }
+
+    public function getAnimals(Request $request)
+    {
+        if ($request->session()->has('dataLogin')) {
+            $dataLogin = $request->session()->get('dataLogin');
+        } else {
+            return redirect(route('app_sale.login'));
+        }
+        $page = $request->get('page') ?? 1;
+        $term = $request->get('term') ?? '';
+        $option['base_url'] = $this->baseUrl;
+        $header = [
+            'Authorization' => 'Bearer ' . $dataLogin['access_token']
+        ];
+        $params = [
+            'page' => $page,
+            'term' => $term,
+            'length' => 10
+        ];
+
+        $this->setOptions($option);
+        $result = $this->get('api/v1/common/sale/animals', $params, $header);
+
+        return $result['data'];
     }
 }
