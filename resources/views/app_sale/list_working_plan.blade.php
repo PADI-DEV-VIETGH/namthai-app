@@ -48,7 +48,13 @@
                                         <div class="cnt-left" style="color: #212121;">
                                             <h4 class="title-cnt">{{ $workingPlan['addressable']['data']['name'] }}</h4>
                                             <div class="date">{{ $workingPlan['day_of_week']. ' ngày ' . Carbon\Carbon::createFromFormat('Y-m-d', $workingPlan['date'])->format('d/m/Y') }}</div>
-                                            <div class="code">{{ $workingPlan['addressable']['type'] == 'farm'? "Mã farm: " : "Mã đại lý: " }}{{ $workingPlan['addressable']['data']['code'] }}</div>
+                                            <div class="code">{{ $workingPlan['addressable']['type'] == 'farm'? "Số điện thoại: " : "Mã đại lý: " }}
+                                                @if($workingPlan['addressable']['type'] == 'farm')
+                                                    {{ $workingPlan['addressable']['data']['phone_number'] }}
+                                                @else
+                                                    {{ $workingPlan['addressable']['data']['code'] }}
+                                                @endif
+                                            </div>
                                             <div class="address">{{ $workingPlan['addressable']['data']['addr_detail'] }}</div>
                                             <input type="hidden" name="id" class="id_address" value="{{ $workingPlan['id'] }}">
                                             <input type="hidden" name="type" class="type" value="{{ $workingPlan['addressable']['type'] }}">

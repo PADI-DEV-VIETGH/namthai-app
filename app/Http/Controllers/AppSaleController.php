@@ -55,6 +55,14 @@ class AppSaleController extends Controller
 
     }
 
+    public function postLogout(Request $request)
+    {
+        $request->session()->flush();
+
+        return redirect()->route('app_sale.home');
+
+    }
+
     public function home(Request $request)
     {
         $dataLogin = session()->get('dataLogin');
@@ -71,7 +79,6 @@ class AppSaleController extends Controller
             return redirect(route('app_sale.login'));
         }
         $page = $request->get('page') ?? 1;
-        $term = $request->get('term') ?? '';
         $option['base_url'] = $this->baseUrl;
         $header = [
             'Content-Type' => 'application/json',
@@ -79,13 +86,12 @@ class AppSaleController extends Controller
         ];
         $this->setOptions($option);
 
-//        $params = [
-//            'page' => $page,
-//            'term' => $term,
-//            'length' => 10
-//        ];
+        $params = [
+            'page' => $page,
+            'length' => 100
+        ];
 
-        $listWorkingPlan = $this->get('api/v1/workingPlans', [], $header);
+        $listWorkingPlan = $this->get('api/v1/workingPlans', $params, $header);
 
         if ($listWorkingPlan['status'] == 200) {
             $listWorkingPlan = $listWorkingPlan['data']['results'];
@@ -155,7 +161,8 @@ class AppSaleController extends Controller
         ];
         $this->setOptions($option);
         $params = [
-            'page' => $page
+            'page' => $page,
+            'length' => 100,
         ];
 
         $result = $this->get('api/v1/order', $params, $header);
