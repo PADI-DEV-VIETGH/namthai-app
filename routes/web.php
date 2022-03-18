@@ -43,7 +43,7 @@ Route::group(['prefix' => 'app-farm'], function() {
 Route::group(['prefix' => 'app-sale'], function() {
     Route::get('login', [AppSaleController::class, 'login'])->name('app_sale.login');
     Route::post('login', [AppSaleController::class, 'postLogin'])->name('app_sale.post.login');
-    Route::post('logout', [AppSaleController::class, 'postLogout'])->name('app_sale.post.logout');
+    Route::get('logout', [AppSaleController::class, 'postLogout'])->name('app_sale.post.logout');
 
     Route::get('home', [AppSaleController::class, 'home'])->name('app_sale.home');
 
