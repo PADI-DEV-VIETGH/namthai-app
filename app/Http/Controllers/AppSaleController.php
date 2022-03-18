@@ -188,6 +188,7 @@ class AppSaleController extends Controller
         ];
 
         $params = [
+            'distributor_id' => $request->get('distributor_id'),
             'examination_id' => $request->get('examination_id'),
             'animals' => $request->get('animals'),
             'weight' => $request->get('weight'),
