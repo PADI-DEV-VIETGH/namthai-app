@@ -186,6 +186,17 @@ class AppSaleController extends Controller
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer ' . $dataLogin['access_token']
         ];
+        $productVariantIds = $request->get('product_variant_id');
+        $arrVariantId = [];
+        if (!empty($productVariantIds)) {
+            foreach ($productVariantIds as $productVariantId) {
+                if (!empty(json_decode($productVariantId))) {
+                    foreach ((json_decode($productVariantId)) as $value) {
+                        $arrVariantId[] = $value;
+                    }
+                }
+            }
+        }
 
         $params = [
             'distributor_id' => $request->get('distributor_id'),
@@ -198,9 +209,10 @@ class AppSaleController extends Controller
             'sickness' => $request->get('sickness'),
             'prehistoric' => $request->get('prehistoric'),
             'diagnostic' => $request->get('diagnostic'),
-            'product_variant_id' => $request->get('product_variant_id'),
+            'product_variant_id' => $arrVariantId,
             'note' => $request->get('note'),
         ];
+
 
         $option['base_url'] = $this->baseUrl;
         $this->setOptions($option);
@@ -536,7 +548,7 @@ class AppSaleController extends Controller
                     $product_variants = $product['product_variant'] ?? [];
                     foreach ($product_variants as $product_variant) {
                         $data['html'] .= '
-                            <tr data-id="' . $product['id'] . '" data-code="' . $product['code'] . '" data-name="' . $product['name'] . ' - ' . $product_variant['name'] . '">
+                            <tr data-product-variant="'. json_encode($product_variant['id']) .'" data-id="' . $product['id'] . '" data-code="' . $product['code'] . '" data-name="' . $product['name'] . ' - ' . $product_variant['name'] . '">
                                 <td>' . $product['code'] . '</td>
                                 <td>' . $product['name'] . ' - ' . $product_variant['name'] . '</td>
                             </tr>

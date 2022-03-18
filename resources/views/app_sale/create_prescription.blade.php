@@ -261,7 +261,7 @@
             $('body').on('click', '#sugget-result tr', function () {
                 let code = $(this).attr('data-code');
                 let name = $(this).attr('data-name');
-                let id = $(this).attr('data-id');
+                let id = $(this).attr('data-product-variant');
                 let html = `
                 <tr>
                     <td>${code}</td>
