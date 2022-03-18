@@ -59,13 +59,17 @@ class AppSaleController extends Controller
     {
         $request->session()->flush();
 
-        return redirect()->route('app_sale.home');
+        return redirect()->route('app_sale.login');
 
     }
 
     public function home(Request $request)
     {
         $dataLogin = session()->get('dataLogin');
+
+        if (!$dataLogin) {
+            return redirect(route('app_sale.login'));
+        }
         $dataCheckIn = session()->get('dataCheckIn');
 
         return view('app_sale.home_not_checkin', compact('dataLogin', 'dataCheckIn'));
