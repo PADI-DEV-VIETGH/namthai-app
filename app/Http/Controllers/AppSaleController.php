@@ -622,7 +622,7 @@ class AppSaleController extends Controller
     {
         $dataLogin = session()->get('dataLogin');
         $page = $request->get('page') ?? 1;
-        $keyword = $request->get('term') ?? '';
+        $keyword = $request->get('keyword') ?? '';
         $except = $request->get('except') ?? '';
         $distributorId = $request->get('distributor_id') ?? '';
         $option['base_url'] = $this->baseUrl;
@@ -632,7 +632,7 @@ class AppSaleController extends Controller
         $params = [
             'page' => $page,
             'length' => 10,
-            'keyword' => $keyword,
+            'term' => $keyword,
             'except[]' => $except,
             'distributor_id' => $distributorId
         ];
@@ -645,15 +645,14 @@ class AppSaleController extends Controller
             $products = $result['data']['results'];
             if (count($products) > 0) {
                 foreach ($products as $product) {
-                    $product_variants = $product['product_variant'] ?? [];
-                    foreach ($product_variants as $product_variant) {
-                        $data['html'] .= '
-                            <tr data-product-variant="'. json_encode($product_variant['id']) .'" data-id="' . $product['id'] . '" data-code="' . $product['code'] . '" data-name="' . $product['name'] . ' - ' . $product_variant['name'] . '">
-                                <td>' . $product['code'] . '</td>
-                                <td>' . $product['name'] . ' - ' . $product_variant['name'] . '</td>
-                            </tr>
-                        ';
-                    }
+                    $data['html'] .= '
+                        <tr data-total-quantity="'. $product['total_quantity'] .'" data-code-product="' . $product['product_code'] . '" data-code="' . $product['code'] . '" data-name="' . $product['product'] . '">
+                            <td>' . $product['product_code'] . '</td>
+                            <td>' . $product['product'] . '</td>
+                            <td>' . $product['code'] . '</td>
+                            <td>' . $product['total_quantity'] . '</td>
+                        </tr>
+                    ';
                 }
             } else {
                 $data['html'] = '
@@ -673,5 +672,35 @@ class AppSaleController extends Controller
         }
 
         return $data;
+    }
+
+    public function updateProductInventory(Request $request)
+    {
+        $dataLogin = session()->get('dataLogin');
+        if (!$dataLogin) {
+            return redirect(route('app_sale.login'));
+        }
+
+        $header = [
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . $dataLogin['access_token']
+        ];
+
+        $params = [
+            'distributor_from' => $request->get('distributor_from') ? (int)  $request->get('distributor_from') : "",
+            'quantity' => $request->get('quantity'),
+            'reason' => $request->get('reason'),
+        ];
+
+        $option['base_url'] = $this->baseUrl;
+        $this->setOptions($option);
+
+        $result = $this->post('api/v1/stock-adjust', $params, $header);
+
+        if (isset($result['status']) && $result['status'] == 200) {
+            return redirect(route('app_sale.home'))->with(['message_success' => 'Cập nhật kiểm kê hàng hóa thành công']);
+        }
+
+        return redirect()->back()->withInput($request->input())->withErrors(['message_error' => $result['error']['message'] ?? $result['data']['message']]);
     }
 }

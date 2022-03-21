@@ -10,6 +10,8 @@
                     <div class="title-page full border-bottom mrb-30">
                         <h3 class="bold text-center">Kiểm kê hàng hóa</h3>
                     </div>
+                    <form method="post" action="{{ route('app_sale.updateProductInventory') }}">
+                        @csrf
                     <div class="border-full content-detail pad-20-30 mrb-40">
                         <div class="full">
                             <div class="col-md-12 col-xs-12">
@@ -22,6 +24,8 @@
                                             <tr>
                                                 <td>Mã sản phẩm</td>
                                                 <td>Tên sản phẩm</td>
+                                                <td>Số lô</td>
+                                                <td>Số lượng</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -31,13 +35,14 @@
                         <div class="full">
                             <div class="col-md-12 col-xs-12">
                                 <div class="content-table">
-                                    <table class="table">
+                                    <table class="table list-product-inventory">
                                         <thead>
                                         <tr>
                                             <th>Mã SP</th>
                                             <th>Tên SP</th>
                                             <th>Số lô</th>
                                             <th>Số lượng </th>
+                                            <th>Comment </th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -46,10 +51,12 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" name="distributor_from" id="idDistributor" />
                         <div class="full text-center">
-                            <button class="btn green pad-8-50">Cập nhật</button>
+                            <button type="submit" class="btn green pad-8-50">Cập nhật</button>
                         </div>
                     </div>
+                    </form>
                     <!--.table-member-mng-->
                 </div>
                 <!-- .block-1-->
@@ -99,20 +106,26 @@
 @section('script')
     <script>
         let timeout = null;
+        let dataCheckIn = localStorage.getItem('dataCheckIn');
+        let idDistributor = JSON.parse(dataCheckIn).id_farm_or_distributor;
+        $('#idDistributor').val(idDistributor);
         $(`#keyword`).on('keyup', function () {
             clearTimeout(timeout);
             timeout = setTimeout(() => {
                 let keyword = $(this).val();
+                
                 $.ajax({
                     url: "{!! route('app_sale.search_product_inventory') !!}",
                     method: 'get',
                     dataType: 'json',
                     data: {
-                        'keyword': keyword
+                        'keyword': keyword,
+                        'distributor_id': idDistributor,
+                        'except' : []
                     },
                     beforeSend: function () {
                         $('#sugget-result .table tbody').html(
-                            '<tr><td>Mã SP</td><td>Tên SP</td></tr>');
+                            '<tr><td>Mã SP</td><td>Tên SP</td><td>Số lô</td><td>Số lượng</td></tr>');
                         $('#sugget-result').hide();
                         $('.image-loading').show();
                     },
@@ -127,6 +140,27 @@
                 });
             }, 1000);
         });
+        $('body').on('click', '#sugget-result tr', function () {
+        let codeProduct = $(this).attr('data-code-product');
+        let name = $(this).attr('data-name');
+        let code = $(this).attr('data-code');
+        let quantity = $(this).attr('data-total-quantity');
+        let html = `
+                <tr>
+                    <td>${codeProduct}</td>
+                    <td>${name}</td>
+                    <td>${code}</td>
+                    <td class="text-center">
+                        <input name="quantity[]" type="text" placeholder="1000" style="width: 80px;">
+                    </td>
+                    <td>
+                        <input name="reason[]" type="text" placeholder="Nhập lý do" style="width: 80px;">
+                    </td>
+                </tr>
+            `;
+        $('.list-product-inventory tbody').append(html);
+        $('#sugget-result').hide();
+    });
     </script>
 @endsection
 @endsection
