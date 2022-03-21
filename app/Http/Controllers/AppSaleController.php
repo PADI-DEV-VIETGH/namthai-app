@@ -111,6 +111,12 @@ class AppSaleController extends Controller
 
     public function productInventory(Request $request)
     {
+        $dataLogin = session()->get('dataLogin');
+
+        if (!$dataLogin) {
+            return redirect(route('app_sale.login'));
+        }
+
         return view('app_sale.product_inventory');
     }
 
@@ -203,7 +209,6 @@ class AppSaleController extends Controller
         }
 
         $params = [
-            'distributor_id' => $request->get('distributor_id'),
             'examination_id' => $request->get('examination_id'),
             'animals' => $request->get('animals'),
             'weight' => $request->get('weight'),
@@ -216,11 +221,14 @@ class AppSaleController extends Controller
             'product_variant_id' => $arrVariantId,
             'note' => $request->get('note'),
         ];
-
+        if ($request->get('distributor_id')) {
+            $params['distributor_id'] = $request->get('distributor_id');
+        }
 
         $option['base_url'] = $this->baseUrl;
         $this->setOptions($option);
         $result = $this->post('api/v1/prescription/create', $params, $header);
+
         if (isset($result['status']) && $result['status'] == 200) {
             return redirect(route('app_sale.home'))->with(['message_success' => 'Tạo mới đơn hàng thành công']);
         }
@@ -608,5 +616,91 @@ class AppSaleController extends Controller
         $result = $this->get('api/v1/common/sale/animals', $params, $header);
 
         return $result['data'];
+    }
+
+    public function searchProductInventory(Request $request)
+    {
+        $dataLogin = session()->get('dataLogin');
+        $page = $request->get('page') ?? 1;
+        $keyword = $request->get('keyword') ?? '';
+        $except = $request->get('except') ?? '';
+        $distributorId = $request->get('distributor_id') ?? '';
+        $option['base_url'] = $this->baseUrl;
+        $header = [
+            'Authorization' => 'Bearer ' . $dataLogin['access_token']
+        ];
+        $params = [
+            'page' => $page,
+            'length' => 10,
+            'term' => $keyword,
+            'except[]' => $except,
+            'distributor_id' => $distributorId
+        ];
+        $this->setOptions($option);
+        $result = $this->get('api/v1/search-consignment-for-stock-adjust', $params, $header);
+
+        $data['html'] = '';
+        if (isset($result['status']) && $result['status'] == 200) {
+            $data['status'] = 200;
+            $products = $result['data']['results'];
+            if (count($products) > 0) {
+                foreach ($products as $product) {
+                    $data['html'] .= '
+                        <tr data-total-quantity="'. $product['total_quantity'] .'" data-code-product="' . $product['product_code'] . '" data-code="' . $product['code'] . '" data-name="' . $product['product'] . '">
+                            <td>' . $product['product_code'] . '</td>
+                            <td>' . $product['product'] . '</td>
+                            <td>' . $product['code'] . '</td>
+                            <td>' . $product['total_quantity'] . '</td>
+                        </tr>
+                    ';
+                }
+            } else {
+                $data['html'] = '
+                    <tr>
+                        <td colspan="2">Không có dữ liệu</td>
+                    </tr>
+                ';
+            }
+
+        } else {
+            $data['status'] = 500;
+            $data['html'] = '
+                <tr>
+                    <td colspan="2">Không có dữ liệu</td>
+                </tr>
+            ';
+        }
+
+        return $data;
+    }
+
+    public function updateProductInventory(Request $request)
+    {
+        $dataLogin = session()->get('dataLogin');
+        if (!$dataLogin) {
+            return redirect(route('app_sale.login'));
+        }
+
+        $header = [
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . $dataLogin['access_token']
+        ];
+
+        $params = [
+            'distributor_from' => $request->get('distributor_from') ? (int)  $request->get('distributor_from') : "",
+            'quantity' => $request->get('quantity'),
+            'reason' => $request->get('reason'),
+        ];
+
+        $option['base_url'] = $this->baseUrl;
+        $this->setOptions($option);
+
+        $result = $this->post('api/v1/stock-adjust', $params, $header);
+
+        if (isset($result['status']) && $result['status'] == 200) {
+            return redirect(route('app_sale.home'))->with(['message_success' => 'Cập nhật kiểm kê hàng hóa thành công']);
+        }
+
+        return redirect()->back()->withInput($request->input())->withErrors(['message_error' => $result['error']['message'] ?? $result['data']['message']]);
     }
 }

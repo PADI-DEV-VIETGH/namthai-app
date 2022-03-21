@@ -1,30 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <title>bike code list</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- Vendor CSS (GLOBAL MANDATORY STYLES)-->
-    <link rel="stylesheet" type="text/css" href="/namthai/assets/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/namthai/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/namthai/assets/css/owl.theme.default.min.css">
-    <link rel="stylesheet" type="text/css" href="/namthai/assets/css/owl.carousel.min.css">
-    <link
-            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap"
-            rel="stylesheet">
-
-
-    <!-- Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="/namthai/assets/css/custom.css">
-    <link rel="stylesheet" type="text/css" href="/namthai/assets/css/admin.css">
-
-</head>
-
-<body class="page-header-fixed page-quick-sidebar-over-content">
+@extends('master')
+@section('title', 'App Sale')
+@section('content')
 <div class="page-container">
     <!--include ../includes/header.jade-->
     <div class="page-content-wrapper page-register">
@@ -34,72 +10,53 @@
                     <div class="title-page full border-bottom mrb-30">
                         <h3 class="bold text-center">Kiểm kê hàng hóa</h3>
                     </div>
+                    <form method="post" action="{{ route('app_sale.updateProductInventory') }}">
+                        @csrf
                     <div class="border-full content-detail pad-20-30 mrb-40">
                         <div class="full">
                             <div class="col-md-12 col-xs-12">
                                 <div class="input-search">
-                                    <input name="Search" type="search" placeholder="Search"/>
+                                    <input name="search" id="keyword" type="search" placeholder="Search"/>
+                                    <img src="https://stg.namthai.paditech.org/assets/img/loader.svg"
+                                         class="image-loading">
+                                    <div id="sugget-result">
+                                        <table class="table">
+                                            <tr>
+                                                <td>Mã sản phẩm</td>
+                                                <td>Tên sản phẩm</td>
+                                                <td>Số lô</td>
+                                                <td>Số lượng</td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="full">
                             <div class="col-md-12 col-xs-12">
                                 <div class="content-table">
-                                    <table class="table">
+                                    <table class="table list-product-inventory">
                                         <thead>
                                         <tr>
                                             <th>Mã SP</th>
                                             <th>Tên SP</th>
                                             <th>Số lô</th>
                                             <th>Số lượng </th>
+                                            <th>Comment </th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>001</td>
-                                            <td>Cám Cò</td>
-                                            <td>AB0012</td>
-                                            <td>
-                                                1000
-                                                <input type="text"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>001</td>
-                                            <td>Cám Cò</td>
-                                            <td>AB0012</td>
-                                            <td>
-                                                1000
-                                                <input type="text"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>001</td>
-                                            <td>Cám Cò</td>
-                                            <td>AB0012</td>
-                                            <td>
-                                                1000
-                                                <input type="text"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>001</td>
-                                            <td>Cám Cò</td>
-                                            <td>AB0012</td>
-                                            <td>
-                                                1000
-                                                <input type="text"/>
-                                            </td>
-                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" name="distributor_from" id="idDistributor" />
                         <div class="full text-center">
-                            <button class="btn green pad-8-50">Cập nhật</button>
+                            <button type="submit" class="btn green pad-8-50">Cập nhật</button>
                         </div>
                     </div>
+                    </form>
                     <!--.table-member-mng-->
                 </div>
                 <!-- .block-1-->
@@ -110,18 +67,100 @@
     </div>
     <!-- .member-->
 </div>
-<!--.page-container-->
+<style>
+    #sugget-result {
+        width: calc(100% - 180px);
+        float: right;
+        position: absolute;
+        right: 15px;
+        background: #fff;
+        top: 48px;
+        z-index: 10;
+        border: 1px solid #ddd;
+        border-top: 0;
+        display: none;
+    }
 
-<!-- Vendor jQuery (CORE PLUGINS - METRONIC)-->
-<script type="text/javascript" src="/namthai/assets/js/jquery.min.js"></script>
-<script type="text/javascript" src="/namthai/assets/js/bootstrap.min.js"> </script>
-<script type="text/javascript" src="/namthai/assets/js/owl.carousel.min.js"></script>
+    #sugget-result table {
+        margin-bottom: 0;
+    }
 
-<!-- Theme Script-->
-<script type="text/javascript" src="https://kit.fontawesome.com/8b9922aecc.js"></script>
-<script type="text/javascript" src="/namthai/assets/js/admin.js"></script>
-<script type="text/javascript" src="/namthai/assets/js/customer.js"></script>
-</body>
+    #sugget-result tr {
+        cursor: pointer;
+    }
 
-</html>
+    #sugget-result td {
+        font-size: 14px;
+    }
 
+    .image-loading {
+        position: absolute;
+        right: 10px;
+        width: 40px;
+        top: 6px;
+        display: none;
+    }
+
+</style>
+
+@section('script')
+    <script>
+        let timeout = null;
+        let dataCheckIn = localStorage.getItem('dataCheckIn');
+        let idDistributor = JSON.parse(dataCheckIn).id_farm_or_distributor;
+        $('#idDistributor').val(idDistributor);
+        $(`#keyword`).on('keyup', function () {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                let keyword = $(this).val();
+                
+                $.ajax({
+                    url: "{!! route('app_sale.search_product_inventory') !!}",
+                    method: 'get',
+                    dataType: 'json',
+                    data: {
+                        'keyword': keyword,
+                        'distributor_id': idDistributor,
+                        'except' : []
+                    },
+                    beforeSend: function () {
+                        $('#sugget-result .table tbody').html(
+                            '<tr><td>Mã SP</td><td>Tên SP</td><td>Số lô</td><td>Số lượng</td></tr>');
+                        $('#sugget-result').hide();
+                        $('.image-loading').show();
+                    },
+                    success: function (data) {
+                        $('#sugget-result .table tbody').append(data.html);
+                        $('#sugget-result').show();
+                        $('.image-loading').hide();
+                    },
+                    error: function () {
+                        $('.image-loading').hide();
+                    }
+                });
+            }, 1000);
+        });
+        $('body').on('click', '#sugget-result tr', function () {
+        let codeProduct = $(this).attr('data-code-product');
+        let name = $(this).attr('data-name');
+        let code = $(this).attr('data-code');
+        let quantity = $(this).attr('data-total-quantity');
+        let html = `
+                <tr>
+                    <td>${codeProduct}</td>
+                    <td>${name}</td>
+                    <td>${code}</td>
+                    <td class="text-center">
+                        <input name="quantity[]" type="text" placeholder="1000" style="width: 80px;">
+                    </td>
+                    <td>
+                        <input name="reason[]" type="text" placeholder="Nhập lý do" style="width: 80px;">
+                    </td>
+                </tr>
+            `;
+        $('.list-product-inventory tbody').append(html);
+        $('#sugget-result').hide();
+    });
+    </script>
+@endsection
+@endsection

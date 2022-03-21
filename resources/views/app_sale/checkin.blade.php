@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>bike code list</title>
+    <title>App Sale</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -95,6 +95,7 @@
                         <input type="hidden" name="nameFarm" class="title"/>
                         <input type="hidden" name="address" class="addressFarm"/>
                         <input type="hidden" name="phone_number" class="phone_number"/>
+                        <input type="hidden" name="id_farm_or_distributor" class="id_farm_or_distributor"/>
                         <div class="title-sec">Tra cứu Vị trí</div>
                         <div class="list-action mrb-20">
                             <div id="map" style="height: 500px; width: 100%;"></div>
@@ -165,6 +166,7 @@
     $('.id_address').val(parseInt(objCheckIn.id));
     $('.typeFarmOrDistributor').val(objCheckIn.type);
     $('.phone_number').val(objCheckIn.phone_number);
+    $('.id_farm_or_distributor').val(objCheckIn.id_farm_or_distributor);
     $('.imageAddress').attr('src', objCheckIn.image);
 
     function initMap() {
