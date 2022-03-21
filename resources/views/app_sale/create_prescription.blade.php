@@ -1,5 +1,5 @@
 @extends('master')
-
+@section('title', 'App Sale')
 @section('content')
     <div class="page-container">
 

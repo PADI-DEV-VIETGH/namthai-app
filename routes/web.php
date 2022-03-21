@@ -64,4 +64,5 @@ Route::group(['prefix' => 'app-sale'], function() {
     Route::get('create_prescription', [AppSaleController::class, 'createPrescription'])->name('app_sale.create_prescription');
     Route::post('store_check_in', [AppSaleController::class, 'storeCheckIn'])->name('app_sale.store_check_in');
     Route::get('get_animals', [AppSaleController::class, 'getAnimals'])->name('app_sale.get_animals');
+    Route::get('search_product_inventory', [AppSaleController::class, 'searchProductInventory'])->name('app_sale.search_product_inventory');
 });
