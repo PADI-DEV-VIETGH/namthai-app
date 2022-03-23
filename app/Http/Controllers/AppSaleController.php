@@ -621,21 +621,25 @@ class AppSaleController extends Controller
     public function searchProductInventory(Request $request)
     {
         $dataLogin = session()->get('dataLogin');
-        $page = $request->get('page') ?? 1;
         $keyword = $request->get('keyword') ?? '';
-        $except = $request->get('except') ?? '';
+        $except = $request->get('except') ?? [];
+        if (!empty($except)) {
+            foreach ($except as $k => $v){
+                $except[$k] = (int)$v;
+            }
+        }
+
         $distributorId = $request->get('distributor_id') ?? '';
         $option['base_url'] = $this->baseUrl;
         $header = [
             'Authorization' => 'Bearer ' . $dataLogin['access_token']
         ];
         $params = [
-            'page' => $page,
-            'length' => 10,
             'term' => $keyword,
-            'except[]' => $except,
+            'except' => $except,
             'distributor_id' => $distributorId
         ];
+
         $this->setOptions($option);
         $result = $this->get('api/v1/search-consignment-for-stock-adjust', $params, $header);
 
@@ -646,7 +650,12 @@ class AppSaleController extends Controller
             if (count($products) > 0) {
                 foreach ($products as $product) {
                     $data['html'] .= '
-                        <tr data-total-quantity="'. $product['total_quantity'] .'" data-code-product="' . $product['product_code'] . '" data-code="' . $product['code'] . '" data-name="' . $product['product'] . '">
+                        <tr 
+                        data-distributor="' . $product['id'] . '" 
+                        data-total-quantity="' . $product['total_quantity'] . '" 
+                        data-code-product="' . $product['product_code'] . '" 
+                        data-code="' . $product['code'] . '" 
+                        data-name="' . $product['product'] . '">
                             <td>' . $product['product_code'] . '</td>
                             <td>' . $product['product'] . '</td>
                             <td>' . $product['code'] . '</td>
