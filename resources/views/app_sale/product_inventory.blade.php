@@ -162,10 +162,10 @@
                     <td>${name}</td>
                     <td>${code}</td>
                     <td class="text-center">
-                        <input name="quantity[]" type="text" value="${quantity}" placeholder="1000" style="width: 80px;">
+                        <input name="quantity[${distributorId}]" type="text" value="${quantity}" placeholder="1000" style="width: 80px;">
                     </td>
                     <td>
-                        <input name="reason[]" type="text" placeholder="Nhập lý do" style="width: 120px;">
+                        <input name="reason[${distributorId}]" type="text" placeholder="Nhập lý do" style="width: 120px;">
                     </td>
                 </tr>
             `;
