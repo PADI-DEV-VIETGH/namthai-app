@@ -694,10 +694,13 @@ class AppSaleController extends Controller
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer ' . $dataLogin['access_token']
         ];
-
+        $quantities = $request->get('quantity');
+        foreach ($quantities as $k => $quantity) {
+            $quantities[$k] = (int) $quantity;
+        }
         $params = [
             'distributor_from' => $request->get('distributor_from') ? (int)  $request->get('distributor_from') : "",
-            'quantity' => $request->get('quantity'),
+            'quantity' => $quantities,
             'reason' => $request->get('reason'),
         ];
 

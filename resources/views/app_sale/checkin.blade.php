@@ -59,7 +59,7 @@
                                 <div class="address"></div>
                                 <input type="hidden" name="idAddress" value="" id="idAddress"/>
                             </div>
-                            <div class="cnt-img-map"><img class="imageAddress" src="" alt=""/></div>
+                            <div class="cnt-img-map"><img style="width: 100%; height: 100%; object-fit: cover; object-position: center" class="imageAddress" src="" alt=""/></div>
                         </div>
                     </section>
                     <section class="content-sec mrb-10">

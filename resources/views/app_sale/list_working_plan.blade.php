@@ -37,7 +37,7 @@
                                             <input type="hidden" name="phone_number" class="phone_number" value="{{ $workingPlan['addressable']['data']['phone_number'] }}">
                                             <input type="hidden" name="id_farm_or_distributor" class="id_farm_or_distributor" value="{{ $workingPlan['addressable']['data']['id'] }}">
                                         </div>
-                                        <div class="cnt-img-map"><img class="image" src="{{ $workingPlan['addressable']['data']['image'] ? $workingPlan['addressable']['data']['image'] : '/namthai/assets/images/map.png' }}" alt="" /></div>
+                                        <div class="cnt-img-map"><img style="width: 100%; height: 100%; object-fit: cover; object-position: center" class="image" src="{{ $workingPlan['addressable']['data']['image'] ? $workingPlan['addressable']['data']['image'] : '/namthai/assets/images/map.png' }}" alt="" /></div>
                                     </div>
                                 </a>
                             @endforeach
