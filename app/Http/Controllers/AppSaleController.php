@@ -558,9 +558,9 @@ class AppSaleController extends Controller
             if (count($products) > 0) {
                 foreach ($products as $product) {
                     $product_variants = $product['product_variant'] ?? [];
-                    foreach ($product_variants as $product_variant) {
+                    foreach ($product_variants as $key => $product_variant) {
                         $data['html'] .= '
-                            <tr data-product-variant="'. json_encode($product_variant['id']) .'" data-id="' . $product['id'] . '" data-code="' . $product['code'] . '" data-name="' . $product['name'] . ' - ' . $product_variant['name'] . '">
+                            <tr data-product-variant="'. json_encode($product_variant['id']) .'" data-id="' . $product_variant['id'][$key] . '" data-code="' . $product['code'] . '" data-name="' . $product['name'] . ' - ' . $product_variant['name'] . '">
                                 <td>' . $product['code'] . '</td>
                                 <td>' . $product['name'] . ' - ' . $product_variant['name'] . '</td>
                             </tr>

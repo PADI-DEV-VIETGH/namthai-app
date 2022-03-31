@@ -52,37 +52,37 @@
                                                         <span class="title">
                                                             Tên đại lý :
                                                         </span>
-                                                        <span class="cnt-sale">{{ $order['distributor_to']['name'] }}</span>
+                                                        <span class="cnt-sale">{{ $order['distributor_to']['name'] ?? '' }}</span>
                                                     </div>
                                                     <div class="infor-sale">
                                                         <span class="title">
                                                             Mã đại lý :
                                                         </span>
-                                                        <span class="cnt-sale">{{ $order['distributor_to']['code'] }}</span>
+                                                        <span class="cnt-sale">{{ $order['distributor_to']['code'] ?? '' }}</span>
                                                     </div>
                                                     <div class="infor-sale">
                                                         <span class="title">
                                                             Mã đơn hàng :
                                                         </span>
-                                                        <span class="cnt-sale">{{ $order['code'] }}</span>
+                                                        <span class="cnt-sale">{{ $order['code'] ?? '' }}</span>
                                                     </div>
                                                     <div class="infor-sale">
                                                         <span class="title">
                                                             Số điện thoại :
                                                         </span>
-                                                        <span class="cnt-sale">{{ $order['distributor_to']['phone_number'] }}</span>
+                                                        <span class="cnt-sale">{{ $order['distributor_to']['phone_number'] ?? '' }}</span>
                                                     </div>
                                                     <div class="infor-sale">
                                                         <span class="title">
                                                             Người đặt hàng :
                                                         </span>
-                                                        <span class="cnt-sale">{{ $order['created_by']['full_name'] }}</span>
+                                                        <span class="cnt-sale">{{ $order['created_by']['full_name'] ?? '' }}</span>
                                                     </div>
                                                     <div class="infor-sale">
                                                         <span class="title">
                                                             Trạng thái:
                                                         </span>
-                                                        <span class="cnt-sale">{{ $order['status'] }}</span>
+                                                        <span class="cnt-sale">{{ $order['status'] ?? '' }}</span>
                                                     </div>
                                                 </a>
                                             </div>
