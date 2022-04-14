@@ -293,9 +293,9 @@ class AppSaleController extends Controller
 
         $result = $this->post('api/v1/examination', $params, $header);
 
-        if (isset($result['id']) && $result['id'] > 0) {
+        if (isset($result['data']) && $result['data'] > 0) {
             if ($this->wantsJson()) {
-                return response()->json(['data'=> $result['id'], 'status' => 200]);
+                return response()->json(['data'=> $result['data']['id'], 'status' => 200]);
             }
 
             return redirect(route('app_sale.home'))->with(['message_success' => 'Cập nhật thăm khám thành công']);
