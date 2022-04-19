@@ -142,13 +142,11 @@ class AppSaleController extends Controller
         ];
         $params = [
             'distributor_id' => $dataForm['distributor_id'],
-            'total_amount' => 0,
             'product_variant' => $productVariant
         ];
-
         $this->setOptions($option);
         $result = $this->post('api/v1/order/create', $params, $header);
-
+        
         if (isset($result['status']) && $result['status'] == 200) {
             return redirect(route('app_sale.order'))->with(['message_success' => 'Tạo đơn hàng thành công']);
         } else {
@@ -546,26 +544,22 @@ class AppSaleController extends Controller
         $params = [
             'page' => $page,
             'length' => 10,
-            'keyword' => $keyword
+            'term' => $keyword
         ];
         $this->setOptions($option);
         $result = $this->get('api/v1/products/search', $params, $header);
-
         $data['html'] = '';
         if (isset($result['status']) && $result['status'] == 200) {
             $data['status'] = 200;
-            $products = $result['data']['results'];
-            if (count($products) > 0) {
-                foreach ($products as $product) {
-                    $product_variants = $product['product_variant'] ?? [];
-                    foreach ($product_variants as $key => $product_variant) {
-                        $data['html'] .= '
-                            <tr data-product-variant="'. json_encode($product_variant['id']) .'" data-id="' . $product_variant['id'][$key] . '" data-code="' . $product['code'] . '" data-name="' . $product['name'] . ' - ' . $product_variant['name'] . '">
-                                <td>' . $product['code'] . '</td>
-                                <td>' . $product['name'] . ' - ' . $product_variant['name'] . '</td>
-                            </tr>
-                        ';
-                    }
+            $product_variants = $result['data']['results'];
+            if (count($product_variants) > 0) {
+                foreach ($product_variants as $key => $product_variant) {
+                    $data['html'] .= '
+                        <tr data-product-variant="'. $product_variant['id'] .'" data-id="' . $product_variant['id'] . '" data-code="' . $product_variant['code'] . '" data-name="' . $product_variant['name'] . '">
+                            <td>' . $product_variant['code'] . '</td>
+                            <td>' . $product_variant['name'] . '</td>
+                        </tr>
+                    ';
                 }
             } else {
                 $data['html'] = '
