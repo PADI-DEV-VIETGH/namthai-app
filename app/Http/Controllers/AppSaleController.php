@@ -198,11 +198,7 @@ class AppSaleController extends Controller
         $arrVariantId = [];
         if (!empty($productVariantIds)) {
             foreach ($productVariantIds as $productVariantId) {
-                if (!empty(json_decode($productVariantId))) {
-                    foreach ((json_decode($productVariantId)) as $value) {
-                        $arrVariantId[] = $value;
-                    }
-                }
+                $arrVariantId[] = $productVariantId;
             }
         }
 
