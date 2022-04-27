@@ -481,6 +481,12 @@ class AppSaleController extends Controller
         $this->setOptions($option);
         $result = $this->get('api/v1/distributor/list', $params, $header);
 
+        foreach($result['data']['results'] as $key => $value){
+            $result['data']['results'][$key]['id'] = $value['id'];
+            $result['data']['results'][$key]['text'] = $value['code'].' - '. $value['name'];
+            $result['data']['results'][$key]['value'] = $value['id'];
+        }
+
         return $result['data'];
     }
 
